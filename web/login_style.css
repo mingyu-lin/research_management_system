@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(255, 255, 255, 1); /* 通常我们不会设置背景为完全透明，这里设为白色 */
+    background-image: url('img/bglogin.png'); /* 注意路径是否正确，相对于CSS文件的位置 */
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#bigBox {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+h1 {
+    text-align: center;
+    color: #333333;
+}
+
+.inputBox {
+    margin-top: 20px;
+}
+
+.inputText {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.inputText span {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #999999;
+    /* 确保iconfont正确加载，这里不需要再次指定font-family，除非在全局样式中被覆盖 */
+}
+
+.inputText input {
+    width: calc(100% - 30px);
+    padding: 10px;
+    padding-left: 30px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px;
+}
+
+.inputText input:focus {
+    border-color: #007bff;
+}
+
+.forgotPwd {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.loginBtn, .registerBtn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.registerBtn {
+    background-color: #28a745;
+    margin-top: 10px;
+}
+
+.loginBtn:hover, .registerBtn:hover {
+    opacity: 0.9;
+}
+
+.role-options {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.role-options label {
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+}

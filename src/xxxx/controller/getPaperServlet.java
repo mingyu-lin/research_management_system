@@ -46,7 +46,7 @@ public class getPaperServlet extends HttpServlet {
 
             // 序列化为 JSON
             String json = new Gson().toJson(messageModel);
-            resp.sendRedirect("index.jsp");
+           
             System.out.println("Generated JSON: " + json);
             out.print(json);
             out.flush();

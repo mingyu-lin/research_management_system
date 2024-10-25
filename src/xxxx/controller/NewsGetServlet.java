@@ -1,5 +1,6 @@
 package xxxx.controller;
 
+import xxxx.entity.User;
 import xxxx.entity.value.MessageModel;
 import xxxx.service.NewsService;
 
@@ -9,6 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
 
 @WebServlet("/getNews")
 public class NewsGetServlet extends HttpServlet {
@@ -19,13 +25,19 @@ public class NewsGetServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         MessageModel messageModel = newsService.newsGet();
+        try{
+            resp.setContentType("application/json;charset=UTF-8");
+            PrintWriter out = resp.getWriter();
 
-        if (messageModel.getCode() == 1) {//成功获取新闻
-            req.getSession().setAttribute("news", messageModel.getObject());
-        }
-        else {//获取新闻失败
-            req.getSession().setAttribute("messageModel", messageModel);
-            req.getRequestDispatcher("main.jsp").forward(req, resp);
+            // 序列化为 JSON
+            String json = new Gson().toJson(messageModel);
+            out.print(json);
+            out.flush();
+
+        } catch (Exception e) {
+            e.printStackTrace(); // 打印堆栈跟踪
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            resp.getWriter().print("{\"error\": \"服务器内部错误\"}");
         }
 
     }

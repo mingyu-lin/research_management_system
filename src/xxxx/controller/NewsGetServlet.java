@@ -1,36 +1,33 @@
 package xxxx.controller;
 
-import xxxx.entity.User;
 import xxxx.entity.value.MessageModel;
+import xxxx.service.NewsService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 @WebServlet("/getNews")
 public class NewsGetServlet extends HttpServlet {
-    private MessageModel messageModel=new MessageModel();
+
+    private NewsService newsService = new NewsService();//调用服务层
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User user=new User();
-        user.setUserName("admin");
-        user.setUserPwd("admin");
-        user.setUserId(1);
+        MessageModel messageModel = newsService.newsGet();
 
-        List<User> users= List.of(user);
-        messageModel.setCount(users.size());
-        messageModel.setCode(1);
-        messageModel.setList(Collections.singletonList(users));
-        HttpSession session = req.getSession();
-        req.getSession().setAttribute("messageModel", messageModel);
-        req.getRequestDispatcher("main.jsp").forward(req, resp);
+        if (messageModel.getCode() == 1) {//成功获取新闻
+            req.getSession().setAttribute("news", messageModel.getObject());
+        }
+        else {//获取新闻失败
+            req.getSession().setAttribute("messageModel", messageModel);
+            req.getRequestDispatcher("main.jsp").forward(req, resp);
+        }
+
     }
+
 }

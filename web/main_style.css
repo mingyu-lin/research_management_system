@@ -1,54 +1,109 @@
-* {
-    box-sizing: border-box;
-}
-body {
+html, body {
+    height: 100%;
     margin: 0;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    padding: 0;
 }
 
-.header {
+.container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    position: fixed; /* 固定头部 */
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000; /* 确保在其他内容之上 */
+    height: 100vh; /* 使用视口单位 vh 来确保占据整个视口高度 */
 }
 
+/* 其他样式保持不变 */
 .sidebar {
-    position: fixed; /* 固定侧边栏 */
-    top: 0;
-    bottom: 0; /* 使侧边栏占据整个垂直空间 */
     width: 200px;
     background-color: #333;
     color: white;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* 确保在其他内容之上 */
+    position: relative; /* 修改为相对定位 */
 }
-
 .sidebar a {
     color: white;
     text-decoration: none;
     display: block;
     padding: 10px 0;
-    padding-left: 20px;
+    padding-left: 20px; /* 增加内边距以对齐文本 */
+    white-space: nowrap;
 }
-
 .sidebar a:hover {
     background-color: #575757;
-    border-radius: 5px;
+    padding-left: 30px; /* 增加悬停时的内边距 */
+}
+.main-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-top: 20px; /* 内容区域的上边距 */
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #333; /* 背景颜色可以根据您的需求调整 */
+    color: white;
+}
+
+.logo img {
+    height: 50px; /* 图片高度可以根据您的需求调整 */
+    width: auto; /* 保持图片比例 */
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin-left: 20px; /* 选项卡之间的间距 */
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+
+.navbar a:hover {
+    background-color: #575757; /* 选项卡悬停时的背景颜色 */
+    border-radius: 5px; /* 可选：圆角效果 */
+}
+
+.header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.header .user-info {
+    display: flex;
+    flex-direction: column;
+}
+.header .user-info span {
+    margin: 2px 0;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #333; /* 背景颜色可以根据您的需求调整 */
+    color: white;
+    flex-wrap: wrap; /* 允许内容换行 */
 }
 
 .breadcrumb {
-    margin-right: auto;
-    white-space: nowrap;
+    margin-right: auto; /* 使当前位置靠左，但为用户信息和退出登录留出空间 */
+    white-space: nowrap; /* 防止内容换行 */
 }
 
 .user-info {
@@ -58,41 +113,20 @@ body {
 
 .user-info .username,
 .user-info .role {
-    margin-left: 10px;
+    margin-left: 10px; /* 用户名和身份之间的间距 */
+    color: white; /* 文本颜色 */
 }
-
 .logout {
-    margin-left: auto;
+    margin-left: auto; /* 使退出登录靠右 */
     color: white;
     text-decoration: none;
+    font-size: 16px;
 }
-
-.message-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
 .message-list li {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 4px;
+    transition: background-color 0.3s;
 }
-
-.message-list li:nth-child(even) {
-    background-color: #e9e9e9;
-}
-
-#message {
-    padding: 20px;
-}
-
-.main-area {
-    margin-top: 60px; /* 调整以适应固定的头部高度 */
-    margin-left: 200px; /* 调整以适应固定的侧边栏宽度 */
-    padding: 20px;
-    height: 100vh; /* 使主要内容区域占据整个视口高度 */
-    overflow-y: auto; /* 添加滚动条以处理溢出的内容 */
+.message-list li:hover {
+    background-color: #ddd; /* 悬停时背景色变化 */
+    cursor: pointer; /* 悬停时指针变为手型 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影 */
 }

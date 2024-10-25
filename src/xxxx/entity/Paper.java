@@ -9,7 +9,7 @@ public class Paper {
     private String paperUpdateFrom;
     private String paperAbstract;
     private String paperPublicationTime;
-
+    private Integer paperFlag;
     public Integer getPaperId() {
         return paperId;
     }

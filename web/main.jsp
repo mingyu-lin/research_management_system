@@ -79,8 +79,27 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script>
   $(document).ready(function() {
-    // 页面加载完成后自动提交表单
-    $('#newsForm').submit();
+    // 使用AJAX请求获取数据
+    $.ajax({
+      url: '/getNews', // 请确保这个URL与你的service方法匹配
+      method: 'GET',
+      success: function(response) {
+        // 假设response是JSON格式的数据
+        var messageModel = response; // 这里需要根据实际情况解析返回的数据
+        if (messageModel && messageModel.list && messageModel.list.length > 0) {
+          var $messageList = $('#message .message-list');
+          $messageList.empty(); // 清空现有的列表
+          messageModel.list.forEach(function(item) {
+            $messageList.append('<li>' + item.toString() + '</li>');
+          });
+        } else {
+          $('#message').html('<p>没有找到消息模型。</p>');
+        }
+      },
+      error: function() {
+        $('#message').html('<p>加载数据时出错。</p>');
+      }
+    });
   });
 </script>
 </body>

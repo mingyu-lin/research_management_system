@@ -7,7 +7,7 @@ public class User {
     private Integer userId; //用户编号
     private String userName; //用户名
     private String userPwd; //密码
-
+    public User() {}
     public Integer getUserId() {
         return userId;
     }

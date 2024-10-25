@@ -9,7 +9,7 @@ public class MessageModel
     private Object object;
     private List<Object> list;
     private Integer count;
-
+    public MessageModel() {}
     public Object getObject() {
         return object;
     }

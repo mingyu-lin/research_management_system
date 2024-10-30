@@ -2,7 +2,6 @@
 html, body {
     height: 100%;
     margin: 0;
-    font-family: Arial, sans-serif; /* 更改字体 */
     font-family: 'Roboto', sans-serif; /* 使用 Roboto 字体 */
 }
 
@@ -10,6 +9,7 @@ html, body {
     display: flex;
     min-height: 100vh;
 }
+
 .system-name {
     color: white; /* 字体颜色为白色 */
     font-size: 1.2em; /* 字体大小 */
@@ -19,7 +19,7 @@ html, body {
 
 .sidebar {
     width: 200px;
-    background-color: rgba(92, 126,250); /* 更改为更深的蓝色 */
+    background-color: rgba(92, 126, 250, 1); /* 更改为更深的蓝色 */
     color: white;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
@@ -30,8 +30,7 @@ html, body {
 
 .sidebar .logo img {
     height: 116px; /* 调整Logo的高度 */
-    width: 200x; /* 调整Logo的宽度 */
-
+    width: 200px; /* 调整Logo的宽度 */
 }
 
 .sidebar a {
@@ -73,31 +72,44 @@ html, body {
     background-color: #f8f9fa; /* 更浅的背景色 */
     margin-top: 20px; /* 预留头部栏的空间 */
     border-radius: 5px; /* 增加圆角 */
+    display: flex;
+    flex-direction: column;
+    /* 水平居中 */
+    align-items: center; /* 垂直居中 */
 }
 
 #message {
     width: 100%;
-    max-width: 1000px;
-    margin: 20px auto;
-    background-color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding: 20px;
+    max-width: 800px; /* 限制最大宽度 */
+    background-color: #fff; /* 背景颜色 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+    border-radius: 5px; /* 圆角 */
+    margin: 0 auto; /* 水平居中 */
+    padding: 20px; /* 添加内边距 */
+    margin-top: 0px; /* 将顶部边距设为0，靠近顶部 */
 }
 
 .news-item {
-    display: flex; /* 使用 flex 布局 */
+    padding: 20px;
+    display: flex;
     flex-direction: column; /* 垂直排列内容 */
-    border-bottom: 1px solid #e9ecef; /* 分隔新闻项 */
-    padding: 15px 0;
-    height: 150px; /* 固定高度，可以根据需要调整 */
-    overflow: hidden; /* 隐藏超出内容 */
-    position: relative; /* 相对定位，以便绝对定位按钮 */
+    text-align: center; /* 内容居中 */
+}
+
+.news-title {
+    font-size: 2em; /* 标题字体大小 */
+    margin: 0 0 10px 0; /* 底部间距 */
+}
+
+.news-meta {
+    font-size: 0.9em; /* 时间和作者信息 */
+    color: #6c757d; /* 中性颜色 */
+    margin-bottom: 15px; /* 底部间距 */
 }
 
 .news-content {
-    flex-grow: 1; /* 填充剩余空间 */
-    margin: 10px 0;
+    margin: 10px 0; /* 上下间距 */
+    text-align: left; /* 左对齐内容 */
     overflow: hidden; /* 隐藏超出内容 */
     text-overflow: ellipsis; /* 显示省略号 */
     display: -webkit-box; /* 使用盒模型 */
@@ -106,27 +118,9 @@ html, body {
 }
 
 .news-buttons {
+    margin-top: auto; /* 将按钮推到底部 */
     display: flex;
-    justify-content: flex-end; /* 右对齐按钮 */
-    align-items: center; /* 垂直居中 */
-    position: absolute; /* 绝对定位，以便定位按钮 */
-    bottom: 110px; /* 离底部的距离 */
-    right: 15px; /* 离右边的距离 */
-}
-
-
-.news-title {
-    font-size: 1.5em;
-    margin: 0;
-}
-
-.news-meta {
-    font-size: 0.9em;
-    color: #6c757d; /* 中性颜色 */
-}
-/* 如果需要对span元素单独应用间距 */
-.news-time, .news-author {
-    margin-right: 10px;
+    justify-content: center; /* 水平居中按钮 */
 }
 
 .view-news {

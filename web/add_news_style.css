@@ -2,7 +2,6 @@
 html, body {
     height: 100%;
     margin: 0;
-    font-family: Arial, sans-serif; /* 更改字体 */
     font-family: 'Roboto', sans-serif; /* 使用 Roboto 字体 */
 }
 
@@ -10,6 +9,7 @@ html, body {
     display: flex;
     min-height: 100vh;
 }
+
 .system-name {
     color: white; /* 字体颜色为白色 */
     font-size: 1.2em; /* 字体大小 */
@@ -19,7 +19,7 @@ html, body {
 
 .sidebar {
     width: 200px;
-    background-color: rgba(92, 126,250); /* 更改为更深的蓝色 */
+    background-color: rgba(92, 126, 250, 1); /* 更改为更深的蓝色 */
     color: white;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
@@ -30,8 +30,7 @@ html, body {
 
 .sidebar .logo img {
     height: 116px; /* 调整Logo的高度 */
-    width: 200x; /* 调整Logo的宽度 */
-
+    width: 200px; /* 调整Logo的宽度 */
 }
 
 .sidebar a {
@@ -66,6 +65,19 @@ html, body {
 .breadcrumb {
     flex-grow: 1; /* 使当前位置区域占据剩余空间 */
 }
+.back-home {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-home:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
 
 .main-area {
     flex-grow: 1;
@@ -73,89 +85,61 @@ html, body {
     background-color: #f8f9fa; /* 更浅的背景色 */
     margin-top: 20px; /* 预留头部栏的空间 */
     border-radius: 5px; /* 增加圆角 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 垂直居中 */
 }
 
 #message {
     width: 100%;
-    max-width: 1000px;
-    margin: 20px auto;
-    background-color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding: 20px;
-}
-
-.news-item {
-    display: flex; /* 使用 flex 布局 */
-    flex-direction: column; /* 垂直排列内容 */
-    border-bottom: 1px solid #e9ecef; /* 分隔新闻项 */
-    padding: 15px 0;
-    height: 150px; /* 固定高度，可以根据需要调整 */
-    overflow: hidden; /* 隐藏超出内容 */
-    position: relative; /* 相对定位，以便绝对定位按钮 */
-}
-
-.news-content {
-    flex-grow: 1; /* 填充剩余空间 */
-    margin: 10px 0;
-    overflow: hidden; /* 隐藏超出内容 */
-    text-overflow: ellipsis; /* 显示省略号 */
-    display: -webkit-box; /* 使用盒模型 */
-    -webkit-line-clamp: 3; /* 显示行数，超出部分截断 */
-    -webkit-box-orient: vertical; /* 设置盒子方向为垂直 */
-}
-
-.news-buttons {
-    display: flex;
-    justify-content: flex-end; /* 右对齐按钮 */
-    align-items: center; /* 垂直居中 */
-    position: absolute; /* 绝对定位，以便定位按钮 */
-    bottom: 110px; /* 离底部的距离 */
-    right: 15px; /* 离右边的距离 */
-}
-
-
-.news-title {
-    font-size: 1.5em;
-    margin: 0;
-}
-
-.news-meta {
-    font-size: 0.9em;
-    color: #6c757d; /* 中性颜色 */
-}
-/* 如果需要对span元素单独应用间距 */
-.news-time, .news-author {
-    margin-right: 10px;
-}
-
-.view-news {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px; /* 增加左右内边距 */
-    border-radius: 25px; /* 圆角 */
+    max-width: 800px; /* 限制最大宽度 */
+    background-color: #fff; /* 背景颜色 */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影 */
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
-}
-
-.view-news:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* 悬停时轻微向上移动 */
-}
-
-.back-home {
-    color: #007bff; /* 修改为蓝色 */
-    text-decoration: none;
-    font-size: 16px;
-    padding: 5px 10px; /* 添加内边距 */
     border-radius: 5px; /* 圆角 */
+    margin: 0 auto; /* 水平居中 */
+    padding: 20px; /* 添加内边距 */
+    margin-top: 0; /* 将顶部边距设为0，靠近顶部 */
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* 垂直排列表单元素 */
+}
+
+form div {
+    margin-bottom: 15px; /* 增加表单元素之间的间距 */
+}
+
+label {
+    font-weight: bold; /* 标签加粗 */
+}
+
+input[type="text"], textarea {
+    width: 100%; /* 填满父元素宽度 */
+    padding: 10px; /* 内边距 */
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 5px; /* 圆角 */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 内阴影效果 */
+    font-size: 1em; /* 字体大小 */
+}
+
+textarea {
+    resize: vertical; /* 允许垂直调整大小 */
+    height: 150px; /* 默认高度 */
+}
+
+button[type="submit"] {
+    background-color: #007bff; /* 按钮背景色 */
+    color: white; /* 按钮文字颜色 */
+    border: none; /* 无边框 */
+    padding: 10px 20px; /* 增加内边距 */
+    border-radius: 25px; /* 圆角 */
+    cursor: pointer; /* 鼠标指针效果 */
     transition: background-color 0.3s; /* 添加过渡效果 */
 }
 
-.back-home:hover {
-    background-color: rgba(0, 123, 255, 0.1); /* 悬停时背景色变化 */
+button[type="submit"]:hover {
+    background-color: #0056b3; /* 悬停时按钮颜色变化 */
 }
 
 .user-info {

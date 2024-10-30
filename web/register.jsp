@@ -57,29 +57,74 @@
 </div>
 </body>
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<!-- 注意：以下JavaScript部分在图片中未直接显示，但基于常规操作可能会包含 -->
 <script type="text/javascript">
-    // 这里可以添加JavaScript代码来处理登录、注册等事件
-    // 例如，给登录按钮添加点击事件
-    $('#loginBtn').click(function() {
-        var uname = $("#userName").val();
-        var upwd = $("#userPwd").val();
-        if(isEmpty(uname)){
-            $("#msg").html("用户姓名不能为空");
+    // 这里可以添加JavaScript代码来处理注册事件
+    // 例如，给注册按钮添加点击事件
+
+    // 定义一个用于显示消息的元素
+    if ($('#msg').length === 0) {
+        $('body').append('<div id="msg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 12px; color: red;"></div>');
+    }
+
+    $('#registrationForm').on('submit', function(event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+
+        var userName = $("#userName").val();
+        var userPwd = $("#userPwd").val();
+        var userEmail = $("#userEmail").val();
+        var userPhone = $("#userPhone").val();
+        var userRole = $("#userRole").val();
+        var userPostscript = $("#userPostscript").val();
+
+        // 验证必填字段
+        if (isEmpty(userName)) {
+            $("#msg").html("用户名不能为空");
             return;
         }
-        if(isEmpty(upwd)){
-            $("#msg").html("用户密码不能为空");
+        if (isEmpty(userPwd)) {
+            $("#msg").html("密码不能为空");
             return;
         }
-        $("#registrationForm").submit();
+        if (isEmpty(userEmail)) {
+            $("#msg").html("邮箱不能为空");
+            return;
+        }
+        if (isEmpty(userPhone)) {
+            $("#msg").html("电话号码不能为空");
+            return;
+        }
+        if (isEmpty(userRole)) {
+            $("#msg").html("请选择身份");
+            return;
+        }
+
+        // 发送 AJAX 请求
+        $.ajax({
+            url: "/register",
+            type: "POST",
+            data: {
+                userName: userName,
+                userPwd: userPwd,
+                userEmail: userEmail,
+                userPhone: userPhone,
+                userRole: userRole,
+                userPostscript: userPostscript
+            },
+            success: function(response) {
+                if (response.code === 1) {
+                    window.location.href = '/index.jsp';
+                } else {
+                    $("#msg").html(response.msg);
+                }
+            },
+            error: function() {
+                $("#msg").html("网络错误，请检查您的网络连接！");
+            }
+        });
     });
 
-    function isEmpty(str){
-        if(str == null || str.trim()==""){
-            return true;
-        }
-        return false;
+    function isEmpty(str) {
+        return !str.trim();
     }
 </script>
 </html>

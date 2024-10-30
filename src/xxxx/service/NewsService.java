@@ -6,7 +6,7 @@ import xxxx.mapper.NewsMapper;
 import xxxx.util.GetSqlSession;
 import org.apache.ibatis.session.SqlSession;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewsService {//新闻服务
@@ -27,8 +27,9 @@ public class NewsService {//新闻服务
             messageModel.setMsg("无新闻！");
             return messageModel;//返回空壳
         }
+        List<Object> objectList = new ArrayList<>(newsList);
+        messageModel.setList(objectList);
 
-        messageModel.setList(Collections.singletonList(newsList));
         return messageModel;//返回新闻
     }
 

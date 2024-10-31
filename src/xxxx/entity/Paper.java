@@ -10,8 +10,25 @@ public class Paper {
     private String paperAbstract;
     private String paperPublicationTime;
     private Integer paperFlag;
+    private String paperLevel;
     public Integer getPaperId() {
         return paperId;
+    }
+
+    public Integer getPaperFlag() {
+        return paperFlag;
+    }
+
+    public void setPaperFlag(Integer paperFlag) {
+        this.paperFlag = paperFlag;
+    }
+
+    public String getPaperLevel() {
+        return paperLevel;
+    }
+
+    public void setPaperLevel(String paperLevel) {
+        this.paperLevel = paperLevel;
     }
 
     public void setPaperId(Integer paperId) {

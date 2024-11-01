@@ -52,6 +52,8 @@
 <script type="text/javascript">
   // 这里可以添加JavaScript代码来处理登录、注册等事件
   // 例如，给登录按钮添加点击事件
+  // 这里可以添加JavaScript代码来处理登录、注册等事件
+  // 例如，给登录按钮添加点击事件
   $('#loginBtn').click(function() {
     var uname = $("#username").val();
     var upwd = $("#userpwd").val();
@@ -63,14 +65,29 @@
       $("#msg").html("用户密码不能为空");
       return;
     }
-    $("#loginform").submit();
+    $.ajax({
+      url: "/login",
+      type: "POST",
+      data: {
+        username: uname,
+        userpwd: upwd,
+        role: $("input[name='role']:checked").val()
+      },
+      success: function(response) {
+        if (response.code === 1) {
+          window.location.href = '/index.jsp';
+        } else {
+          $("#msg").html(response.msg);
+        }
+      },
+      error: function() {
+        $("#msg").html("网络错误，请检查您的网络连接！");
+      }
+    });
   });
 
   function isEmpty(str){
-    if(str == null || str.trim()==""){
-      return true;
-    }
-    return false;
+    return !str.trim();
   }
 </script>
 </html>

@@ -1,124 +1,125 @@
+/* 页面布局 */
 html, body {
     height: 100%;
     margin: 0;
-    padding: 0;
+    font-family: 'Roboto', sans-serif; /* 使用 Roboto 字体 */
 }
 
 .container {
     display: flex;
-    height: 100vh; /* 使用视口单位 vh 来确保占据整个视口高度 */
+    min-height: 100vh;
 }
 
-/* 其他样式保持不变 */
-.sidebar {  
-    width: 200px;  
-    background-color: #333;  
-    color: white;  
-    padding: 20px;  
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);  
-    position: relative; /* 修改为相对定位 */  
-}  
-.sidebar a {  
-    color: white;  
-    text-decoration: none;  
-    display: block;  
-    padding: 10px 0;  
-    padding-left: 20px; /* 增加内边距以对齐文本 */  
-    white-space: nowrap;  
-}  
-.sidebar a:hover {  
-    background-color: #575757;  
-    padding-left: 30px; /* 增加悬停时的内边距 */  
-}  
-.main-area {  
-    flex-grow: 1;  
-    display: flex;  
-    flex-direction: column;  
-    padding: 20px;  
-}  
-.content {  
-    flex-grow: 1;  
-    overflow-y: auto;  
-    padding-top: 20px; /* 内容区域的上边距 */  
-}  
-.header {  
-    display: flex;  
-    align-items: center;  
-    justify-content: space-between;  
-    padding: 10px 20px;  
-    background-color: #333; /* 背景颜色可以根据您的需求调整 */  
-    color: white;  
-}  
-  
-.logo img {  
-    height: 50px; /* 图片高度可以根据您的需求调整 */  
-    width: auto; /* 保持图片比例 */  
-}  
-  
-.navbar ul {  
-    list-style: none;  
-    margin: 0;  
-    padding: 0;  
-    display: flex;  
-}  
-  
-.navbar li {  
-    margin-left: 20px; /* 选项卡之间的间距 */  
-}  
-  
-.navbar a {  
-    color: white;  
-    text-decoration: none;  
-    padding: 10px 15px;  
-    display: block;  
-}  
-  
-.navbar a:hover {  
-    background-color: #575757; /* 选项卡悬停时的背景颜色 */  
-    border-radius: 5px; /* 可选：圆角效果 */  
+.system-name {
+    color: white; /* 字体颜色为白色 */
+    font-size: 1.2em; /* 字体大小 */
+    margin-bottom: 20px; /* 底部间距 */
+    text-align: center; /* 居中对齐 */
 }
 
-.header img {  
-    width: 50px;  
-    height: 50px;  
-    border-radius: 50%;  
-    margin-right: 20px;  
-}  
-.header .user-info {  
-    display: flex;  
-    flex-direction: column;  
-}  
-.header .user-info span {  
-    margin: 2px 0;  
-}  
-.header {  
-    display: flex;  
-    align-items: center;  
-    justify-content: space-between;  
-    padding: 10px 20px;  
-    background-color: #333; /* 背景颜色可以根据您的需求调整 */  
-    color: white;  
-    flex-wrap: wrap; /* 允许内容换行 */  
-}  
-  
-.breadcrumb {  
-    margin-right: auto; /* 使当前位置靠左，但为用户信息和退出登录留出空间 */  
-    white-space: nowrap; /* 防止内容换行 */  
-}  
-  
-.user-info {  
-    display: flex;  
-    align-items: center;  
-}  
-  
-.user-info .username,  
-.user-info .role {  
-    margin-left: 10px; /* 用户名和身份之间的间距 */  
-    color: white; /* 文本颜色 */  
-}  
-.logout {  
-    margin-left: auto; /* 使退出登录靠右 */  
-    color: white;  
-    text-decoration: none;  
-    font-size: 16px;  
+.sidebar {
+    width: 200px;
+    background-color: rgba(92, 126, 250); /* 更改为更深的蓝色 */
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.sidebar .logo img {
+    height: 116px; /* 调整Logo的高度 */
+    width: 200px; /* 调整Logo的宽度 */
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px; /* 增加内边距 */
+    transition: background-color 0.3s, padding-left 0.3s; /* 增加过渡效果 */
+}
+
+.sidebar a:hover {
+    background-color: #0056b3; /* 悬停时颜色变化 */
+    padding-left: 25px; /* 悬停时的内边距变化 */
+}
+
+.content-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: white; /* 修改为白色背景 */
+    color: #333; /* 调整文本颜色为深色 */
+    border-bottom: 2px solid #ccc; /* 添加浅色底部边框 */
+}
+
+.breadcrumb {
+    flex-grow: 1; /* 使当前位置区域占据剩余空间 */
+}
+
+.main-area {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #f8f9fa; /* 更浅的背景色 */
+    margin-top: 20px; /* 预留头部栏的空间 */
+    border-radius: 5px; /* 增加圆角 */
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px; /* 标签的上下间距 */
+}
+
+input[type="text"], input[type="date"], textarea {
+    width: 100%; /* 输入框和文本区域宽度100% */
+    padding: 10px; /* 内边距 */
+    border: 1px solid #ccc; /* 边框颜色 */
+    border-radius: 4px; /* 圆角 */
+    margin-bottom: 15px; /* 下间距 */
+}
+.back-home {
+    color: #007bff; /* 修改为蓝色 */
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px; /* 添加内边距 */
+    border-radius: 5px; /* 圆角 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}
+
+.back-home:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* 悬停时背景色变化 */
+}
+
+button {
+    background-color: #007bff; /* 按钮颜色 */
+    color: white;
+    border: none;
+    padding: 10px 15px; /* 按钮内边距 */
+    border-radius: 4px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停效果 */
+    transition: background-color
+}
+.logout {
+    margin-left: 20px; /* 增加与用户名和身份的间距 */
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px; /* 添加内边距 */
+    border-radius: 5px; /* 圆角 */
+    background-color: #dc3545; /* 红色背景 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}
+
+.logout:hover {
+    background-color: #c82333; /* 悬停时颜色变化 */
+    color: white; /* 悬停时文字颜色 */
 }

@@ -1,75 +1,94 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 30281
-  Date: 2024/10/21
-  Time: 19:25
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>发布论文</title>
-    <link rel="stylesheet" href="add_paper_style.css">
+    <title>添加论文</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="add_paper_style.css"> <!-- 引入CSS文件 -->
 </head>
 <body>
-
-<div class="header">
-    <div class="logo">
-        <img src="bgimg.jpg" alt="网站Logo">
-    </div>
-    <div class="breadcrumb">当前位置: 首页 > 用户管理</div>
-    <div class="user-info">
-        <span class="username">用户名</span>
-        <span class="role">身份</span>
-    </div>
-    <a href="#" class="logout">退出登录</a>
-</div>
 <div class="container">
     <div class="sidebar">
+        <div class="logo">
+            <img src="img/logo.png" alt="网站Logo">
+        </div>
+        <div class="system-name">科研管理系统</div>
         <a href="#">首页</a>
-        <a href="#">用户管理</a>
-        <a href="#">系统设置</a>
-        <a href="#">订单管理</a>
-        <a href="#">会员管理</a>
+        <a href="#">检索</a>
+        <a href="#">私信</a>
+        <a href="#">个人信息</a>
+        <a href="#">我的论文</a>
+        <a href="#">我的项目</a>
     </div>
-    <div class="main-area">
-        <h2>添加论文</h2>
-        <form id="paperForm" action="/add_paper" method="POST">
-            <label for="paperTitle">标题:</label>
-            <input type="text" id="paperTitle" name="paperTitle" required><br>
+    <div class="content-container">
+        <div class="header">
+            <div class="breadcrumb">
+                <a href="#" class="back-home">返回首页</a>
+            </div>
+            <div class="user-info">
+                <span class="username">用户名</span>(<span class="role">身份</span>)
+                <a href="#" class="logout">退出登录</a>
+            </div>
+        </div>
 
-            <label for="paperAuthor">作者:</label>
-            <input type="text" id="paperAuthor" name="paperAuthor" required><br>
+        <div class="main-area">
+            <h2>添加论文</h2>
+            <form id="paperForm" action="/add_paper" method="POST">
+                <label for="paperTitle">标题:</label>
+                <input type="text" id="paperTitle" name="paperTitle" required>
 
-            <label for="paperPublicationVenue">发表地点:</label>
-            <input type="text" id="paperPublicationVenue" name="paperPublicationVenue"><br>
+                <label for="paperAuthor">作者:</label>
+                <input type="text" id="paperAuthor" name="paperAuthor" required>
 
-            <label for="Keywords">关键词:</label>
-            <input type="text" id="Keywords" name="Keywords"><br>
+                <label for="paperPublicationVenue">发表地点:</label>
+                <input type="text" id="paperPublicationVenue" name="paperPublicationVenue">
 
-            <label for="paperAbstract">摘要:</label>
-            <textarea id="paperAbstract" name="paperAbstract" rows="4" cols="50"></textarea><br>
+                <label for="Keywords">关键词:</label>
+                <input type="text" id="Keywords" name="Keywords">
 
-            <label for="paperPublicationTime">发表时间:</label>
-            <input type="date" id="paperPublicationTime" name="paperPublicationTime"><br>
+                <label for="paperAbstract">摘要:</label>
+                <textarea id="paperAbstract" name="paperAbstract" rows="4"></textarea>
 
-            <button type="submit",id="addBtn">提交</button>
-        </form>
+                <label for="paperPublicationTime">发表时间:</label>
+                <input type="date" id="paperPublicationTime" name="paperPublicationTime">
+
+                <button type="submit" id="addBtn">提交</button>
+            </form>
+        </div>
     </div>
 </div>
-</body>
+
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<!-- 注意：以下JavaScript部分在图片中未直接显示，但基于常规操作可能会包含 -->
 <script type="text/javascript">
-    // 这里可以添加JavaScript代码来处理登录、注册等事件
-    // 例如，给登录按钮添加点击事件
-    $('#addBtn').click(function() {
+    $(document).ready(function() {
+        var paperId = new URLSearchParams(window.location.search).get('paperId');
 
-        $("#paperForm").submit();
+        if (paperId) {
+            $.ajax({
+                url: '/getOnePaper?paperId=' + paperId,
+                method: 'GET',
+                success: function(response) {
+                    if (response.code === 1 && response.object) {
+                        var paper = response.object;
+                        $('#paperTitle').val(paper.paperTitle);
+                        $('#paperAuthor').val(paper.paperAuthor);
+                        $('#paperPublicationVenue').val(paper.paperPublicationVenue);
+                        $('#Keywords').val(paper.keywords);
+                        $('#paperAbstract').val(paper.paperAbstract);
+                        $('#paperPublicationTime').val(paper.paperPublicationTime);
+                    } else {
+                        alert('加载论文数据失败: ' + response.msg);
+                    }
+                },
+                error: function() {
+                    alert('获取论文数据时出错。');
+                }
+            });
+        }
     });
-
-
 </script>
+</body>
 </html>
+

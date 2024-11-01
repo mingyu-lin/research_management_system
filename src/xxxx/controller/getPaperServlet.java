@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/getPaper")
+@WebServlet("/getPapers")
 public class getPaperServlet extends HttpServlet {
 
     private PaperGetService paperGetService = new PaperGetService();//实例化服务层

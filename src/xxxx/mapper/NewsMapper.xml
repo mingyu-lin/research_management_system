@@ -7,5 +7,8 @@
     <select id="getNews" resultType="xxxx.entity.News">
         select * from news
     </select>
-
+    <!-- 新增SQL映射：根据id获取新闻 -->
+    <select id="getNewsById" resultType="xxxx.entity.News">
+        SELECT * FROM news WHERE newsId = #{newsId}
+    </select>
 </mapper>

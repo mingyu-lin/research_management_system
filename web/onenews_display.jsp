@@ -74,6 +74,7 @@
         method: 'GET',
         data: { newsId: newsId },
         success: function(response) {
+          console.log("test");
           console.log('Message Model:', response);
           if (response.code === 1 && response.object) {
             const news = response.object;
@@ -92,7 +93,7 @@
 
             // 将生成的 HTML 结构添加到页面中
             $('#message').html($newsItem);
-            console.log(newsItemHtml); // 打印生成的 HTML 代码
+            //console.log(newsItem); // 打印生成的 HTML 代码
 
           } else {
             $('#message').html('<p>未找到该新闻。</p>');

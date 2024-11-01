@@ -32,5 +32,39 @@ public class NewsService {//新闻服务
 
         return messageModel;//返回新闻
     }
+    // 新增方法：根据新闻id获取新闻
+    public MessageModel getNewsById(String newsId) {
+        MessageModel messageModel = new MessageModel();
+
+        // 判断newsId是否为空
+        if (newsId == null || newsId.isEmpty()) {
+            messageModel.setCode(0);
+            messageModel.setMsg("新闻id不能为空！");
+            return messageModel;
+        }
+
+        // 调用mapper层获取特定id的新闻
+        SqlSession session = GetSqlSession.createSqlSession();
+        NewsMapper newsMapper = session.getMapper(NewsMapper.class);
+        News news = newsMapper.getNewsById(newsId);
+
+        if (news == null) {
+            // 如果没有找到新闻，设置失败信息
+            messageModel.setCode(0);
+            messageModel.setMsg("无此新闻！");
+        } else {
+            // 如果找到了新闻，直接设置object字段
+            messageModel.setObject(news);
+            messageModel.setCode(1); // 成功信息
+            messageModel.setMsg("获取新闻成功");
+            System.out.println("test"+news.getNewsContent());
+        }
+
+        // 确保SqlSession被关闭
+        session.close();
+
+        return messageModel;
+    }
+
 
 }

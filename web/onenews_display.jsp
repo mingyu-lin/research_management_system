@@ -27,7 +27,7 @@
         <a href="#" class="back-home">返回首页</a>
       </div>
       <div class="user-info">
-        <span class="username">用户名</span>(<span class="role">身份</span>)
+        <span class="username">用户名</span> (<span class="role">身份</span>)
         <a href="#" class="logout">退出登录</a>
       </div>
     </div>
@@ -37,7 +37,11 @@
         <!-- 新闻内容将通过 JavaScript 动态填充 -->
 
         </div>
+      <div class="news-buttons">
+        <button id="delete-button" class="view-news" style="display: none;">删除</button>
       </div>
+
+    </div>
     </div>
   </div>
 </div>
@@ -45,8 +49,8 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script>
   const userInfo = {
-    username: "张三",
-    role: "管理员"
+    username: "<%= session.getAttribute("username") %>",
+    role: "<%= session.getAttribute("role") %>"
   };
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -55,6 +59,10 @@
     usernameElement.textContent = userInfo.username;
     roleElement.textContent = userInfo.role;
 
+    // 显示删除按钮（仅限 admin）
+    if (userInfo.role === "admin") {
+      document.getElementById('delete-button').style.display = 'block';
+    }
     // 获取新闻 ID
     const urlParams = new URLSearchParams(window.location.search);
     const newsId = urlParams.get('newsId');
@@ -98,6 +106,29 @@
       });
     }
   });
+  document.getElementById('delete-button').addEventListener('click', () => {
+    const newsId = new URLSearchParams(window.location.search).get('newsId');
+
+    if (confirm("确定要删除这条新闻吗？")) {
+      $.ajax({
+        url: 'DeleteNewsServlet', // 删除新闻的 servlet
+        method: 'POST',
+        data: { newsId: newsId },
+        success: function(response) {
+          if (response.code === 1) {
+            alert("新闻删除成功！");
+            window.location.href = 'newsList.jsp'; // 重定向到新闻列表页
+          } else {
+            alert("删除失败，请重试。");
+          }
+        },
+        error: function() {
+          alert("删除时出错，请稍后再试。");
+        }
+      });
+    }
+  });
+
 </script>
 </body>
 </html>

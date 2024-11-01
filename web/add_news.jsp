@@ -14,21 +14,21 @@
       <img src="img/logo.png" alt="网站Logo">
     </div>
     <div class="system-name">科研管理系统</div>
-    <a href="#">首页</a>
+    <a href="main.jsp">首页</a>
     <a href="#">检索</a>
     <a href="#">私信</a>
     <a href="#">个人信息</a>
-    <a href="#">我的论文</a>
+    <a href="my_paper.jsp">我的论文</a>
     <a href="#">我的项目</a>
   </div>
   <div class="content-container">
     <div class="header">
       <div class="breadcrumb">
-        <a href="#" class="back-home">返回首页</a>
+        <a href="main.jsp" class="back-home">返回首页</a>
       </div>
       <div class="user-info">
         <span class="username">用户名</span>(<span class="role">身份</span>)
-        <a href="#" class="logout">退出登录</a>
+        <a href="login.jsp" class="logout">退出登录</a>
       </div>
     </div>
 
@@ -69,25 +69,33 @@
     $('#addNewsForm').on('submit', function(e) {
       e.preventDefault(); // 防止默认提交行为
 
-      // 使用 .serialize() 获取表单数据
-      const formData = $(this).serialize();
+      // 弹出确认对话框
+      if (confirm("确定要提交这条新闻吗？")) {
+        // 使用 .serialize() 获取表单数据
+        const formData = $(this).serialize();
 
-      // 发送 AJAX 请求保存新闻
-      $.ajax({
-        url: 'AddNewsServlet', // 确保这个路径正确
-        method: 'POST',
-        data: formData, // 使用表单数据
-        success: function(response) {
-          if (response.code === 1) {
-            $('#message').html('<p>新闻添加成功！</p>');
-          } else {
-            $('#message').html('<p>添加新闻失败：' + response.msg + '</p>');
+        // 发送 AJAX 请求保存新闻
+        $.ajax({
+          url: 'AddNewsServlet', // 确保这个路径正确
+          method: 'POST',
+          data: formData, // 使用表单数据
+          success: function(response) {
+            if (response.code === 1) {
+              alert("新闻添加成功！");
+              // 可以在这里重定向到其他页面或刷新当前页面
+              // window.location.href = 'index.jsp';
+            } else {
+              alert("添加新闻失败：" + response.msg);
+            }
+          },
+          error: function() {
+            alert("提交新闻时出错，请稍后再试。");
           }
-        },
-        error: function() {
-          $('#message').html('<p>提交新闻时出错，请稍后再试。</p>');
-        }
-      });
+        });
+      } else {
+        // 用户取消提交
+        alert("已取消提交新闻。");
+      }
     });
   });
 </script>

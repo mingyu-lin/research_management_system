@@ -179,3 +179,24 @@ html, body {
     background-color: #c82333; /* 悬停时颜色变化 */
     color: white; /* 悬停时文字颜色 */
 }
+/* 删除按钮的样式 */
+#delete-button {
+    background-color: #dc3545; /* 红色背景 */
+    color: white; /* 白色文字 */
+    border: none; /* 无边框 */
+    padding: 10px 20px; /* 增加内边距 */
+    border-radius: 25px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停时为指针 */
+    transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
+}
+
+#delete-button:hover {
+    background-color: #c82333; /* 悬停时颜色变化 */
+    transform: translateY(-2px); /* 悬停时轻微向上移动 */
+}
+
+#delete-button:disabled {
+    background-color: #999; /* 禁用状态颜色 */
+    cursor: not-allowed; /* 鼠标悬停时为禁用指针 */
+}
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--首先解析namespace：命名空间，此属性通常用来映射Dao（Mapper）层接口-->
+<mapper namespace="xxxx.mapper.AdminMapper">
+    <select id="queryAdminByName" parameterType="String" resultType="xxxx.entity.Admin">
+        SELECT * FROM admininfo WHERE adminName = #{userName}
+    </select>
+</mapper>

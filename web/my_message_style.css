@@ -1,0 +1,182 @@
+/* 页面布局 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.system-name {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: rgba(92, 126, 250);
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.sidebar .logo img {
+    height: 116px;
+    width: 200px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #0056b3;
+    padding-left: 25px;
+}
+
+.content-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: white;
+    color: #333;
+    border-bottom: 2px solid #ccc;
+}
+
+.breadcrumb {
+    flex-grow: 1;
+}
+
+.main-area {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #f8f9fa;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+#messages {
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.messages-list {
+    list-style-type: none; /* 去掉列表前的默认样式 */
+    padding: 0; /* 去掉内边距 */
+    margin: 0; /* 去掉外边距 */
+}
+
+.message-item {
+    display: flex; /* 使用 flex 布局 */
+    flex-direction: column; /* 垂直排列内容 */
+    border-bottom: 1px solid #e9ecef; /* 分隔私信项 */
+    padding: 15px 0;
+    height: 150px; /* 固定高度，可以根据需要调整 */
+    overflow: hidden; /* 隐藏超出内容 */
+    position: relative; /* 相对定位，以便绝对定位按钮 */
+}
+
+.message-content {
+    flex-grow: 1; /* 填充剩余空间 */
+    margin: 10px 0;
+    max-height: 60px; /* 设置最大高度 */
+    overflow-y: auto; /* 当内容超出时，出现垂直滚动条 */
+    text-overflow: ellipsis; /* 显示省略号 */
+    display: -webkit-box; /* 使用盒模型 */
+    -webkit-line-clamp: 3; /* 显示行数，超出部分截断 */
+    -webkit-box-orient: vertical; /* 设置盒子方向为垂直 */
+}
+.reply-message {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px; /* 增加左右内边距 */
+    border-radius: 25px; /* 圆角 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
+    position: absolute; /* 绝对定位 */
+    bottom: 10px; /* 距底部的距离 */
+    right: 15px; /* 距右边的距离 */
+}
+
+.reply-message:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* 悬停时轻微向上移动 */
+}
+
+.sender-name {
+    font-weight: bold; /* 发件人姓名加粗 */
+}
+
+.message-time {
+    font-size: 0.9em; /* 时间字体稍小 */
+    color: #6c757d; /* 中性颜色 */
+}
+
+
+.back-home {
+    color: #007bff; /* 修改为蓝色 */
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px; /* 添加内边距 */
+    border-radius: 5px; /* 圆角 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}
+
+.back-home:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* 悬停时背景色变化 */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* 向右对齐 */
+}
+
+.user-info .username,
+.user-info .role {
+    margin-left: 10px; /* 用户名和身份之间的间距 */
+    color: #333; /* 文本颜色调整为深色 */
+}
+
+
+.logout {
+    margin-left: 20px; /* 增加与用户名和身份的间距 */
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px; /* 添加内边距 */
+    border-radius: 5px; /* 圆角 */
+    background-color: #dc3545; /* 红色背景 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}
+
+.logout:hover {
+    background-color: #c82333; /* 悬停时颜色变化 */
+    color: white; /* 悬停时文字颜色 */
+}

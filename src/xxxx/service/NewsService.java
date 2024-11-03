@@ -1,8 +1,10 @@
 package xxxx.service;
 
 import xxxx.entity.News;
+import xxxx.entity.Paper;
 import xxxx.entity.value.MessageModel;
 import xxxx.mapper.NewsMapper;
+import xxxx.mapper.getOnePaperMapper;
 import xxxx.util.GetSqlSession;
 import org.apache.ibatis.session.SqlSession;
 
@@ -27,9 +29,11 @@ public class NewsService {//新闻服务
             messageModel.setMsg("无新闻！");
             return messageModel;//返回空壳
         }
-        List<Object> objectList = new ArrayList<>(newsList);
+        List<Object> objectList = new ArrayList<>();
+        for (News news : newsList) {
+            objectList.add(news);
+        }
         messageModel.setList(objectList);
-
         return messageModel;//返回新闻
     }
     // 新增方法：根据新闻id获取新闻
@@ -67,4 +71,26 @@ public class NewsService {//新闻服务
     }
 
 
+    public static class getOnePaperService {
+
+        public MessageModel getOnePaper(int id) {//获取新闻
+            MessageModel messageModel = new MessageModel();
+
+            SqlSession session= GetSqlSession.createSqlSession();
+            getOnePaperMapper get1PaperMapper = session.getMapper(getOnePaperMapper.class);
+            Paper paper=get1PaperMapper.getOnePaper(id);//调用mapper层获取新闻
+
+            if(paper==null){//库中无新闻
+                Paper empty_paper = new Paper();
+                messageModel.setObject(empty_paper);
+                messageModel.setCode(0);//失败信息
+                messageModel.setMsg("无论文！");
+                return messageModel;//返回空壳
+            }
+            messageModel.setObject(paper);
+
+            return messageModel;//返回新闻
+        }
+
+    }
 }

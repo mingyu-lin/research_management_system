@@ -12,12 +12,12 @@ import java.io.PrintWriter;
 
 import com.google.gson.Gson;
 
-import xxxx.service.getOnePaperService;
+import xxxx.service.NewsService;
 
 @WebServlet("/getOnePaper")
 public class GetOnePaperServlet extends HttpServlet {
 
-    private getOnePaperService service = new getOnePaperService();//服务
+    private NewsService.getOnePaperService service = new NewsService.getOnePaperService();//服务
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -5,7 +5,7 @@
 <mapper namespace="xxxx.mapper.getOnePaperMapper">
     <!--命名空间-->
     <select id="getOnePaper" parameterType="int" resultType="xxxx.entity.Paper">
-        select * from paper where paper.id=#{id}
+        select * from paper where paperId=#{id}
     </select>
 
 </mapper>

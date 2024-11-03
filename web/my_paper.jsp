@@ -59,6 +59,7 @@
           <tr>
             <th>标题</th>
             <th>作者</th>
+            <th>等级</th>
             <th>发布时间</th>
             <th>操作</th>
           </tr>
@@ -75,9 +76,19 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
+    // 使用 URLSearchParams 获取查询参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const paperFlag = urlParams.get('paperFlag');
+    const paperAuthor = urlParams.get('paperAthuor'); // 注意拼写
+    const paperTitle = urlParams.get('paperTitle');
     $.ajax({
       url: '/getPapers',
       method: 'GET',
+      data: {
+        paperFlag: paperFlag || '', // 如果为 null，发送空字符串
+        paperAuthor: paperAuthor || '', // 如果为 null，发送空字符串
+        paperTitle: paperTitle || '' // 如果为 null，发送空字符串
+      },
       success: function(response) {
         console.log('Received response:', response);
         if (response.code === 1 && response.list && response.list.length > 0) {
@@ -96,7 +107,7 @@
                                     .attr('href', 'userinfo.jsp?authorId=' + item.authorId)
                             )
                     )
-
+                    .append($('<td></td>').text(item.paperLevel))
                     .append($('<td></td>').text(item.paperPublicationTime))
                     .append($('<td></td>')
                             .append($('<button class="view-paper" data-paper-id="' + item.paperId + '"></button>').text('查看'))

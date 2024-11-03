@@ -1,5 +1,6 @@
 package xxxx.entity;//实体包
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 //新闻类
@@ -83,4 +84,5 @@ public class News {
                 ", newsContent='" + newsContent + '\'' +
                 '}';
     }
+
 }

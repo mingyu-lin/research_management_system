@@ -110,12 +110,12 @@ html, body {
 .news-content {
     margin: 10px 0; /* 上下间距 */
     text-align: left; /* 左对齐内容 */
-    overflow: hidden; /* 隐藏超出内容 */
-    text-overflow: ellipsis; /* 显示省略号 */
-    display: -webkit-box; /* 使用盒模型 */
-    -webkit-line-clamp: 3; /* 显示行数，超出部分截断 */
-    -webkit-box-orient: vertical; /* 设置盒子方向为垂直 */
+    overflow-y: auto; /* 超出时显示垂直滚动条 */
+    padding: 10px; /* 添加内边距 */
+    border: 1px solid #e9ecef; /* 可选：添加边框以更好地分隔内容 */
+    border-radius: 5px; /* 可选：增加圆角 */
 }
+
 
 .news-buttons {
     margin-top: auto; /* 将按钮推到底部 */

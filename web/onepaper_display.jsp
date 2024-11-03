@@ -42,7 +42,10 @@
             <div class="action-buttons">
                 <button id="edit-button" class="action-btn">编辑</button>
                 <button id="delete-button" class="action-btn">删除</button>
+                <button id="approve-button" class="action-btn">通过</button>
+                <button id="reject-button" class="action-btn">拒绝</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -51,7 +54,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var paperId = new URLSearchParams(window.location.search).get('paperId'); // 获取URL中的paperId
-
+        var adminId = '<%= session.getAttribute("adminId") %>'; // 从Session中获取adminId
         $.ajax({
             url: '/getOnePaper?paperId=' + paperId, // 假设你有这个servlet
             method: 'GET',
@@ -64,9 +67,9 @@
                     // 使用 jQuery 动态创建论文详情
                     $paperDetails.append('<h2>' + paper.paperTitle + '</h2>');
                     $paperDetails.append('<p><strong>作者：</strong>' + paper.paperAuthor + '</p>');
-                    $paperDetails.append('<p><strong>发表场所：</strong>' + paper.paperPublicationVenue + '</p>');
+                    $paperDetails.append('<p><strong>刊物/会议：</strong>' + paper.paperPublicationVenue + '</p>');
+                    $paperDetails.append('<p><strong>等级：</strong>' + paper.paperAbstract + '</p>');
                     $paperDetails.append('<p><strong>关键词：</strong>' + paper.keywords + '</p>');
-                    $paperDetails.append('<p><strong>来源：</strong>' + paper.paperUpdateFrom + '</p>');
                     $paperDetails.append('<p><strong>摘要：</strong>' + paper.paperAbstract + '</p>');
                     $paperDetails.append('<p><strong>发布时间：</strong>' + paper.paperPublicationTime + '</p>');
                 } else {
@@ -103,6 +106,44 @@
                 });
             }
         });
+
+    // 通过按钮的点击事件
+    $('#approve-button').on('click', function() {
+        $.ajax({
+            url: '/paperReview?paperId=' + paperId + '&action=approve&adminId=' + adminId, // 添加adminId
+            method: 'POST',
+            success: function(response) {
+                if (response.code === 1) {
+                    alert("论文审核通过成功！");
+                    window.location.reload(); // 刷新页面
+                } else {
+                    alert("审核失败: " + response.msg);
+                }
+            },
+            error: function() {
+                alert("请求失败，请稍后重试。");
+            }
+        });
+    });
+
+    // 拒绝按钮的点击事件
+    $('#reject-button').on('click', function() {
+        $.ajax({
+            url: '/paperReview?paperId=' + paperId + '&action=reject&adminId=0', // adminId为0
+            method: 'POST',
+            success: function(response) {
+                if (response.code === 1) {
+                    alert("论文审核拒绝成功！");
+                    window.location.reload(); // 刷新页面
+                } else {
+                    alert("拒绝失败: " + response.msg);
+                }
+            },
+            error: function() {
+                alert("请求失败，请稍后重试。");
+            }
+        });
+    });
     });
 </script>
 </body>

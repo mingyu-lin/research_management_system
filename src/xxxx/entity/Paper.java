@@ -5,7 +5,7 @@ public class Paper {
     private String paperTitle;
     private String paperAuthor;
     private String paperPublicationVenue;
-    private String Keywords;
+    private String keywords;
     private String paperUpdateFrom;
     private String paperAbstract;
     private String paperPublicationTime;
@@ -60,11 +60,11 @@ public class Paper {
     }
 
     public String getKeywords() {
-        return Keywords;
+        return keywords;
     }
 
     public void setKeywords(String keywords) {
-        Keywords = keywords;
+        this.keywords = keywords;
     }
 
     public String getPaperUpdateFrom() {

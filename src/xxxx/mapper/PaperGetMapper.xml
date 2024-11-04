@@ -8,4 +8,16 @@
         select * from paper
     </select>
 
+    <select id="getPaperByAuthor" parameterType="String" resultType="xxxx.entity.Paper">
+        select * from paper where paper.paperAuthor=#{author}
+    </select>
+
+    <select id="getPaperByTitleAndAuthor_flagPos" parameterType="String" resultType="xxxx.entity.Paper">
+        select * from paper where paper.paperAuthor=#{author} and paper.paperTitle=#{title} and paper.paperFlag>0
+    </select>
+
+    <select id="getPaper_flagNeg1" resultType="xxxx.entity.Paper">
+        select * from paper where paper.paperFlag=-1
+    </select>
+
 </mapper>

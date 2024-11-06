@@ -6,4 +6,7 @@
     <select id="queryUserByName" parameterType="String" resultType="User">
         select * from userinfo where userName = #{userName}
     </select>
+    <insert id="registerUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
+        insert into userinfo(userName,userPwd,userPhone,userEmail,userFlag,userCreateTime,userPostscript) values (#{userName},#{userPwd},#{userPhone},#{userEmail},-1,Now(),#{userPostscript})
+    </insert>
 </mapper>

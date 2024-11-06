@@ -37,7 +37,7 @@
       <h2>发送私信</h2>
       <form id="messageForm">
         <label for="receiverName">接收者:</label>
-        <input type="text" id="receiverName" name="receiverName" readonly>
+        <input type="text" id="receiverName" name="receiverName" >
 
         <label for="messageContent">消息内容:</label>
         <textarea id="messageContent" name="messageContent" rows="4" required></textarea>

@@ -12,7 +12,7 @@
         select * from paper where paper.paperAuthor=#{author}
     </select>
 
-    <select id="getPaperByTitleAndAuthor_flagPos" parameterType="String" resultType="xxxx.entity.Paper">
+    <select id="getPaperByTitleAndAuthor_flagPos" resultType="xxxx.entity.Paper">
         select * from paper where paper.paperAuthor=#{author} and paper.paperTitle=#{title} and paper.paperFlag>0
     </select>
 

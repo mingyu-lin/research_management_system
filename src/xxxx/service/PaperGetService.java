@@ -1,5 +1,6 @@
 package xxxx.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 
 import xxxx.entity.Paper;
@@ -56,7 +57,7 @@ public class PaperGetService {
         return messageModel;//返回新闻
     }
 
-    public MessageModel paperGetByTitleAndAuthor_flagPos(String title, String author) {//获取新闻
+    public MessageModel paperGetByTitleAndAuthor_flagPos(@Param("title") String title,@Param("author") String author) {//获取新闻
         MessageModel messageModel = new MessageModel();
 
         SqlSession session= GetSqlSession.createSqlSession();

@@ -16,7 +16,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-@WebServlet("/getMessages")
+@WebServlet("/g")
 public class GetMessagesServlet extends HttpServlet {
 
     @Override

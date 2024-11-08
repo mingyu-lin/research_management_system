@@ -5,7 +5,7 @@
 <mapper namespace="xxxx.mapper.getUserMapper">
     <!--命名空间-->
     <select id="getUserById" parameterType="int" resultType="xxxx.entity.User">
-        select * from user where user.id=#{id}
+        select * from user where userinfo.id=#{id}
     </select>
 
     <select id="getUserList" resultType="xxxx.entity.User">

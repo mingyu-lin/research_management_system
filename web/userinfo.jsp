@@ -67,14 +67,14 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        var userId = new URLSearchParams(window.location.search).get('userId'); // 获取URL中的userId
+        var userId = new URLSearchParams(window.location.search).get('author'); // 获取URL中的userId
         if (userId) {
             $.ajax({
-                url: '/getUserInfo?userId=' + userId, // 假设你有这个servlet
+                url: 'getUserInfo?userName=' + userId, // 假设你有这个servlet
                 method: 'GET',
                 success: function(response) {
-                    if (response.code === 1 && response.user) {
-                        var user = response.user;
+                    if (response.code === 1 && response.object) {
+                        var user = response.object;
                         $('.profile-name').text(user.userName);
                         $('#profile-email').val(user.userEmail);
                         $('#profile-phone').val(user.userPhone);
@@ -98,12 +98,12 @@
                     userPostscript: $('#profile-postscript').val(),
                     userCreateTime: $('#profile-create-time').val()
                 };
-
+                console.log(userData);
                 $.ajax({
-                    url: '/Register', // 假设你的后端路径为 /Register
+                    url: '/editPwd',
                     method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(userData),
+                    //contentType: 'application/json',
+                    data: userData,
                     success: function(response) {
                         alert(response.message || '保存成功！');
                     },

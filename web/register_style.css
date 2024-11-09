@@ -1,9 +1,10 @@
 body {
     font-family: Arial, sans-serif;
     background-color: rgba(255, 255, 255, 1); /* 通常我们不会设置背景为完全透明，这里设为白色 */
-    background-image: url('img/bglogin.png'); /* 注意路径是否正确，相对于CSS文件的位置 */
+    background-image: url('img/bglogin.webp'); /* 注意路径是否正确，相对于CSS文件的位置 */
     background-repeat: no-repeat;
     display: flex;
+    background-size: cover; /* 让图片覆盖整个页面 */
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -11,12 +12,14 @@ body {
 }
 
 #bigBox {
+    position: relative; /* 使内部元素能够相对此容器进行绝对定位 */
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
 }
+
 
 h1 {
     text-align: center;
@@ -77,11 +80,22 @@ h1 {
 }
 
 .registerButton {
+
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
     background-color: #28a745;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
     margin-top: 10px;
+    margin-bottom: 20px;
+    display: block; /* 使按钮成为块级元素，以便居中 */
+    margin-left: auto; /* 居中对齐 */
+    margin-right: auto; /* 居中对齐 */
 }
 
-.loginButton:hover, .registerButton:hover {
+.registerButton:hover {
     opacity: 0.9;
 }
 
@@ -96,16 +110,23 @@ h1 {
     cursor: pointer;
 }
 .backToLogin {
-    text-align: center;
-    margin-top: 15px;
+    position: absolute; /* 绝对定位 */
+    bottom: 10px;       /* 距离底部10px */
+    left: 10px;         /* 距离左边10px */
     font-size: 14px;
     color: #007bff;
     cursor: pointer;
 }
 
 .backToLogin a {
+    margin-left: 10px;
     text-decoration: none;
     color: #007bff;
+    transition: color 0.3s ease; /* 平滑的颜色过渡效果 */
+}
+
+.backToLogin a:hover {
+    color: #0056b3; /* 悬停时改变颜色 */
 }
 .inputText select {
     width: calc(100% - 30px);

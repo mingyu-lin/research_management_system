@@ -2,11 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--首先解析namespace：命名空间，此属性通常用来映射Dao（Mapper）层接口-->
 <mapper namespace="xxxx.mapper.UserMapper">
-    <!--id：对应Dao（Mapper）层接口方法名 parameterType：执行输入参数类型-->
+
+    <!-- 查询用户 -->
     <select id="queryUserByName" parameterType="String" resultType="User">
         select * from userinfo where userName = #{userName}
     </select>
+
+    <!-- 注册用户 -->
     <insert id="registerUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
-        insert into userinfo(userName,userPwd,userPhone,userEmail,userFlag,userCreateTime,userPostscript) values (#{userName},#{userPwd},#{userPhone},#{userEmail},-1,Now(),#{userPostscript})
+        insert into userinfo(userName, userPwd, userPhone, userEmail, userFlag, userCreateTime, userPostscript)
+        values (#{userName}, #{userPwd}, #{userPhone}, #{userEmail}, -1, Now(), #{userPostscript})
     </insert>
+
+    <!-- 检查旧密码是否正确 -->
+    <select id="checkOldPassword" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM userinfo
+        WHERE userid = #{userId} AND userPwd = #{oldPassword}
+    </select>
+
+    <!-- 更新用户密码 -->
+    <update id="updateUserPassword" parameterType="map">
+        UPDATE userinfo
+        SET userPwd = #{newPassword}
+        WHERE userid = #{userId}
+    </update>
+    <update id="updateUserInfo" parameterType="map">
+        UPDATE userinfo
+        SET userName = #{userName},
+            userEmail = #{userEmail},
+            userPhone = #{userPhone},
+            userPostscript = #{userPostscript}
+        WHERE userid = #{userId}
+    </update>
+
 </mapper>

@@ -79,15 +79,15 @@
     // 使用 URLSearchParams 获取查询参数
     const urlParams = new URLSearchParams(window.location.search);
     const paperFlag = urlParams.get('paperFlag');
-    const paperAuthor = urlParams.get('paperAthuor'); // 注意拼写
+    const paperAuthor = urlParams.get('paperAuthor'); // 注意拼写
     const paperTitle = urlParams.get('paperTitle');
     $.ajax({
-      url: '/getPapers',
+      url: '/getPaper',
       method: 'GET',
       data: {
         paperFlag: paperFlag || '', // 如果为 null，发送空字符串
-        paperAuthor: paperAuthor || '', // 如果为 null，发送空字符串
-        paperTitle: paperTitle || '' // 如果为 null，发送空字符串
+        paperAuthor: paperAuthor || '%', // 如果为 null，发送空字符串
+        paperTitle: paperTitle || '%' // 如果为 null，发送空字符串
       },
       success: function(response) {
         console.log('Received response:', response);
@@ -104,7 +104,7 @@
                     .append($('<td></td>')
                             .append($('<a class="author-link"></a>') // 添加 class
                                     .text(item.paperAuthor)
-                                    .attr('href', 'userinfo.jsp?authorId=' + item.authorId)
+                                    .attr('href', 'userinfo.jsp?author=' + item.paperAuthor)
                             )
                     )
                     .append($('<td></td>').text(item.paperLevel))
@@ -128,6 +128,19 @@
     $(document).on('click', '.view-paper', function() {
       var paperId = $(this).data('paper-id'); // 获取Paper ID
       window.location.href = 'onepaper_display.jsp?paperId=' + paperId; // 跳转到Paper展示页面
+    });
+    $('.search-button').click(function(event) {
+      event.preventDefault(); // 阻止表单的默认提交
+
+      // 获取输入框的值
+      var searchTitle = $('#searchTitle').val();
+      var searchAuthor = $('#searchAuthor').val();
+
+      // 构造跳转URL，附带查询参数
+      var url = 'my_paper.jsp?paperTitle=' + encodeURIComponent(searchTitle) + '&paperAuthor=' + encodeURIComponent(searchAuthor);
+
+      // 跳转到my_paper.jsp，并附上参数
+      window.location.href = url;
     });
   });
 </script>

@@ -92,7 +92,7 @@ public class UserService {
 
 
         if(findUser!=null){
-            messageModel.setCode(1);
+            messageModel.setCode(0);
             messageModel.setMsg("账号已存在");
             return messageModel;
         }
@@ -101,4 +101,48 @@ public class UserService {
 
         return messageModel;
     }
+    public boolean updatePassword(int userId, String oldPassword, String newPassword) {
+        SqlSession session = GetSqlSession.createSqlSession();
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+
+        try {
+            // 验证旧密码是否正确
+            System.out.println("userId:"+userId);
+            System.out.println("oldPassword:"+oldPassword);
+            int count=userMapper.checkOldPassword(userId, oldPassword);
+            boolean isCorrectOldPassword = count>0;;
+            if (!isCorrectOldPassword) {
+                return false;
+            }
+
+            // 更新新密码
+            System.out.println("userId"+userId);
+            System.out.println("oldPassword"+oldPassword);
+            userMapper.updateUserPassword(userId, newPassword);
+            session.commit();
+            return true;
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+    public boolean updateUserInfo(int userId, String userName, String userEmail, String userPhone, String userPostscript) {
+        SqlSession session = GetSqlSession.createSqlSession();
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+
+        try {
+            // Update user information
+            int result = userMapper.updateUserInfo(userId, userName, userEmail, userPhone, userPostscript);
+            session.commit();
+            return result > 0;
+        } catch (Exception e) {
+            session.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
 }

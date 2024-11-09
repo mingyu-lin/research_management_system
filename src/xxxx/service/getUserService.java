@@ -6,6 +6,7 @@ import xxxx.entity.News;
 import xxxx.entity.User;
 import xxxx.entity.value.MessageModel;
 import xxxx.mapper.NewsMapper;
+import xxxx.mapper.UserMapper;
 import xxxx.mapper.getUserMapper;
 import xxxx.util.GetSqlSession;
 
@@ -14,13 +15,13 @@ import java.util.List;
 
 public class getUserService {
 
-    public MessageModel getOneUser(int id) {
+    public MessageModel getOneUser(String username) {
         MessageModel messageModel = new MessageModel();
         SqlSession session= GetSqlSession.createSqlSession();
 
         //
-        getUserMapper mapper = session.getMapper(getUserMapper.class);
-        User info=mapper.getUserById(id);//调用mapper层获取新闻
+        UserMapper mapper = session.getMapper(UserMapper.class);
+        User info=mapper.queryUserByName(username);//调用mapper层获取新闻
         if(info==null){//库中无新闻
             User empty_info = new User();
             messageModel.setObject(empty_info);

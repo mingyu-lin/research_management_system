@@ -1,13 +1,21 @@
 package xxxx.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import xxxx.entity.User;
 
 /**
  * 用户接口类
  */
 public interface UserMapper {
-    /*User:与.xml（映射文件）文件中的resulType的类型一致
-     * queryUserByName：接口的名字和.xml文件（映射文件）的id一致*/
-    public User queryUserByName(String userName);
-    public int registerUser(User registerUser);
+    User queryUserByName(String userName);
+    int registerUser(User registerUser);
+    int checkOldPassword(@Param("userId") int userId, @Param("oldPassword") String oldPassword);
+    int updateUserPassword(@Param("userId") int userId, @Param("newPassword") String newPassword);
+
+    // New method to update user info
+    int updateUserInfo(@Param("userId") int userId,
+                       @Param("userName") String userName,
+                       @Param("userEmail") String userEmail,
+                       @Param("userPhone") String userPhone,
+                       @Param("userPostscript") String userPostscript);
 }

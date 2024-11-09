@@ -28,7 +28,7 @@ public class RegisterServlet extends HttpServlet {
         String userPhone = req.getParameter("userPhone");
         //String userRole = req.getParameter("userRole");
         String userPostscript = req.getParameter("userPostscript");
-
+        userPostscript = (userPostscript == null) ? "" : userPostscript;
         System.out.println("Received username: " + userName);
         System.out.println("Received password: " + userPwd);
 
@@ -37,7 +37,7 @@ public class RegisterServlet extends HttpServlet {
             //MessageModel messageModel = userService.userLogin(username, userpwd);
             MessageModel messageModel=userService.userRegist(userName,userPwd,userEmail,userPhone,userPostscript);
 
-
+            System.out.println("msg"+messageModel.getMsg());
             resp.setContentType("application/json;charset=UTF-8");
             PrintWriter out = resp.getWriter();
             // 序列化为 JSON

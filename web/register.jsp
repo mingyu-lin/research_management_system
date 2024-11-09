@@ -35,14 +35,6 @@
                 <span class="iconfont icon-phone">T</span>
                 <input type="text" id="userPhone" name="userPhone" placeholder="电话号码" required />
             </div>
-            <!-- 添加身份选择下拉列表 -->
-            <div class="inputText">
-                <span class="iconfont icon-role">R</span>
-                <select id="userRole" name="userRole" required>
-                    <option value="admin">管理员</option>
-                    <option value="teacher">教师</option>
-                </select>
-            </div>
             <div class="inputText">
                 <span class="iconfont icon-phone">T</span>
                 <input type="text" id="userPostscript" name="userPostscript" placeholder="备注" />
@@ -73,7 +65,7 @@
         var userPwd = $("#userPwd").val();
         var userEmail = $("#userEmail").val();
         var userPhone = $("#userPhone").val();
-        var userRole = $("#userRole").val();
+
         var userPostscript = $("#userPostscript").val();
 
         // 验证必填字段
@@ -93,10 +85,7 @@
             $("#msg").html("电话号码不能为空");
             return;
         }
-        if (isEmpty(userRole)) {
-            $("#msg").html("请选择身份");
-            return;
-        }
+
 
         // 发送 AJAX 请求
         $.ajax({
@@ -107,18 +96,20 @@
                 userPwd: userPwd,
                 userEmail: userEmail,
                 userPhone: userPhone,
-                userRole: userRole,
                 userPostscript: userPostscript
             },
             success: function(response) {
                 if (response.code === 1) {
+                    alert("注册成功");
                     window.location.href = '/index.jsp';
                 } else {
-                    $("#msg").html(response.msg);
+                    alert(response.msg);
+
                 }
             },
             error: function() {
-                $("#msg").html("网络错误，请检查您的网络连接！");
+                alert("网络错误，请检查您的网络连接！");
+
             }
         });
     });

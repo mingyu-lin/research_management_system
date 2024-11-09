@@ -13,16 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("//GetUserInfoServlet")
+@WebServlet("/getUserInfo")
 public class GetUserInfoServlet extends HttpServlet {
 
     private getUserService service = new getUserService();//
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        int id = Integer.parseInt(req.getParameter("userId"));//
-        MessageModel messageModel = service.getOneUser(id);//
+        String username = req.getParameter("userName");
+        System.out.println("user"+username);
+        //int id = Integer.parseInt(req.getParameter("userId"));//
+        MessageModel messageModel = service.getOneUser(username);//
 
 
         resp.setContentType("application/json;charset=UTF-8");

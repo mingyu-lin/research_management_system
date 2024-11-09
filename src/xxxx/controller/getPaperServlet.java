@@ -29,7 +29,15 @@ public class getPaperServlet extends HttpServlet {
 
         String title = req.getParameter("paperTitle");
         String author = req.getParameter("paperAuthor");
-        int flag = Integer.parseInt(req.getParameter("paperFlag"));
+        String paperFlagStr = req.getParameter("paperFlag");
+        System.out.println(role);
+        System.out.println(title);
+        System.out.println(author);
+        System.out.println(paperFlagStr);
+        int flag = 0; // 默认值，可以根据实际情况调整
+        if (paperFlagStr != null && !paperFlagStr.trim().isEmpty()){
+            flag = Integer.parseInt(paperFlagStr);
+        }
 
         MessageModel messageModel=new MessageModel();
         if(Objects.equals(role, "user")|| ( Objects.equals(role,"admin")&&(flag!=1) ) ){

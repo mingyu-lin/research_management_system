@@ -70,6 +70,27 @@ public class NewsService {//新闻服务
         return messageModel;
     }
 
+    public MessageModel addNews(News news) {
+        MessageModel messageModel = new MessageModel();
+        try (SqlSession session = GetSqlSession.createSqlSession()) {
+            NewsMapper newsMapper = session.getMapper(NewsMapper.class);
+            int result = newsMapper.addNews(news);
+            session.commit();
+            if (result > 0) {
+                messageModel.setCode(1);
+                messageModel.setMsg("新闻添加成功");
+            } else {
+                messageModel.setCode(0);
+                messageModel.setMsg("新闻添加失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            messageModel.setCode(0);
+            messageModel.setMsg("新闻添加失败：" + e.getMessage());
+        }
+        return messageModel;
+    }
+
 
     public static class getOnePaperService {
 

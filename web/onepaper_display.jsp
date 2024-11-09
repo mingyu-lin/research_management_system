@@ -16,12 +16,28 @@
             <img src="img/logo.png" alt="网站Logo">
         </div>
         <div class="system-name">科研管理系统</div>
-        <a href="#">首页</a>
-        <a href="#">检索</a>
-        <a href="#">私信</a>
-        <a href="#">个人信息</a>
-        <a href="#">我的论文</a>
-        <a href="#">我的项目</a>
+        <a href="main.jsp">首页</a>
+        <a href="my_paper.jsp">检索</a>
+        <a href="my_message.jsp">我的私信</a>
+        <a href="sendmessage.jsp">发送私信</a>
+        <c:choose>
+            <c:when test="${sessionScope.role == 'admin'}">
+                <a href="add_news.jsp">发布新闻</a>
+                <a href="my_paper.jsp?paperFlag=1">论文审核</a>
+                <a href="#">项目审核</a>
+                <a href="user_management.jsp">用户管理</a>
+            </c:when>
+
+
+            <c:when test="${sessionScope.role == 'user'}">
+                <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
+                <a href="#" id="myPapersLink">我的论文</a>
+                <a href="#">我的项目</a>
+                <a href="add_paper.jsp?paperAuthor=${sessionScope.username}">提交论文</a>
+                <a href="#">提交项目</a>
+                <a href="#">我的数据</a>
+            </c:when>
+        </c:choose>
     </div>
     <div class="content-container">
         <div class="header">
@@ -54,16 +70,19 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var paperId = new URLSearchParams(window.location.search).get('paperId'); // 获取URL中的paperId
-        var adminId = '<%= session.getAttribute("adminId") %>'; // 从Session中获取adminId
+        var adminId = '<%= session.getAttribute("userid") %>'; // 从Session中获取adminId
+        var username = '<%= session.getAttribute("username") %>'; // 从Session中获取username
+        var role = '<%= session.getAttribute("role") %>'; // 从Session中获取role
+        var paper;
         $.ajax({
             url: '/getOnePaper?paperId=' + paperId, // 假设你有这个servlet
             method: 'GET',
             success: function(response) {
                 if (response.code === 1 && response.object) {
-                    var paper = response.object;
+                    paper = response.object;
                     var $paperDetails = $('#paper-details');
                     $paperDetails.empty(); // 清空现有内容
-
+                    console.log(paper);
                     // 使用 jQuery 动态创建论文详情
                     $paperDetails.append('<h2>' + paper.paperTitle + '</h2>');
                     $paperDetails.append('<p><strong>作者：</strong>' + paper.paperAuthor + '</p>');
@@ -72,6 +91,24 @@
                     $paperDetails.append('<p><strong>关键词：</strong>' + paper.keywords + '</p>');
                     $paperDetails.append('<p><strong>摘要：</strong>' + paper.paperAbstract + '</p>');
                     $paperDetails.append('<p><strong>发布时间：</strong>' + paper.paperPublicationTime + '</p>');
+
+                    // 控制按钮的显示
+                    if (role === 'admin') {
+                        $('#edit-button').show();
+                        $('#delete-button').show();
+                        $('#approve-button').show();
+                        $('#reject-button').show();
+                    } else if (paper.paperAuthor === username) {
+                        $('#edit-button').show();
+                        $('#delete-button').show();
+                        $('#approve-button').hide();
+                        $('#reject-button').hide();
+                    } else {
+                        $('#edit-button').hide();
+                        $('#delete-button').hide();
+                        $('#approve-button').hide();
+                        $('#reject-button').hide();
+                    }
                 } else {
                     $('#paper-details').html('<p>' + response.msg + '</p>');
                 }
@@ -83,7 +120,15 @@
 
         // 编辑按钮的点击事件
         $('#edit-button').on('click', function() {
-            window.location.href = 'add_paper.jsp?paperId=' + paperId; // 跳转到编辑页面
+            var url = 'add_paper.jsp?paperId=' + paperId +
+                '&paperTitle=' + encodeURIComponent(paper.paperTitle) +
+                '&paperAuthor=' + encodeURIComponent(paper.paperAuthor) +
+                '&paperPublicationVenue=' + encodeURIComponent(paper.paperPublicationVenue) +
+                '&Keywords=' + encodeURIComponent(paper.keywords) +
+                '&paperAbstract=' + encodeURIComponent(paper.paperAbstract) +
+                '&paperPublicationTime=' + encodeURIComponent(paper.paperPublicationTime) +
+                '&paperLevel=' + encodeURIComponent(paper.paperLevel);
+            window.location.href = url;
         });
 
         // 删除按钮的点击事件
@@ -95,7 +140,10 @@
                     success: function(response) {
                         if (response.code === 1) {
                             alert("论文删除成功！");
-                            window.location.href = 'index.jsp'; // 删除后跳转到首页
+                           history.back(); // 删除后跳转到首页
+                            setTimeout(function() {
+                                location.reload(true); // 强制刷新页面
+                            }, 0);
                         } else {
                             alert("删除失败: " + response.msg);
                         }
@@ -107,43 +155,49 @@
             }
         });
 
-    // 通过按钮的点击事件
-    $('#approve-button').on('click', function() {
-        $.ajax({
-            url: '/paperReview?paperId=' + paperId + '&action=approve&adminId=' + adminId, // 添加adminId
-            method: 'POST',
-            success: function(response) {
-                if (response.code === 1) {
-                    alert("论文审核通过成功！");
-                    window.location.reload(); // 刷新页面
-                } else {
-                    alert("审核失败: " + response.msg);
+        // 通过按钮的点击事件
+        $('#approve-button').on('click', function() {
+            $.ajax({
+                url: '/paperReview?paperId=' + paperId + '&action=approve&adminId=' + adminId, // 添加adminId
+                method: 'POST',
+                success: function(response) {
+                    if (response.code === 1) {
+                        alert("论文审核通过成功！");
+                        history.back(); // 删除后跳转到首页
+                        setTimeout(function() {
+                            location.reload(true); // 强制刷新页面
+                        }, 0);
+                    } else {
+                        alert("审核失败: " + response.msg);
+                    }
+                },
+                error: function() {
+                    alert("请求失败，请稍后重试。");
                 }
-            },
-            error: function() {
-                alert("请求失败，请稍后重试。");
-            }
+            });
         });
-    });
 
-    // 拒绝按钮的点击事件
-    $('#reject-button').on('click', function() {
-        $.ajax({
-            url: '/paperReview?paperId=' + paperId + '&action=reject&adminId=0', // adminId为0
-            method: 'POST',
-            success: function(response) {
-                if (response.code === 1) {
-                    alert("论文审核拒绝成功！");
-                    window.location.reload(); // 刷新页面
-                } else {
-                    alert("拒绝失败: " + response.msg);
+        // 拒绝按钮的点击事件
+        $('#reject-button').on('click', function() {
+            $.ajax({
+                url: '/paperReview?paperId=' + paperId + '&action=reject&adminId='+adminId, // adminId为0
+                method: 'POST',
+                success: function(response) {
+                    if (response.code === 1) {
+                        alert("论文审核拒绝成功！");
+                        history.back(); // 删除后跳转到首页
+                        setTimeout(function() {
+                            location.reload(true); // 强制刷新页面
+                        }, 0);
+                    } else {
+                        alert("拒绝失败: " + response.msg);
+                    }
+                },
+                error: function() {
+                    alert("请求失败，请稍后重试。");
                 }
-            },
-            error: function() {
-                alert("请求失败，请稍后重试。");
-            }
+            });
         });
-    });
     });
 </script>
 </body>

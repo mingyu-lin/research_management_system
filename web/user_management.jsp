@@ -75,6 +75,8 @@
                     .append($('<td></td>').text(item.userPhone))
                     .append($('<td></td>').text(item.userCreateTime))
                     .append($('<td></td>')
+                            .append($('<button class="view-user" data-user-id="' + item.userId + '">查看</button>'))
+                            .append(' ')
                             .append($('<button class="delete-user" data-user-id="' + item.userId + '">删除</button>'))
                     );
 
@@ -111,6 +113,12 @@
         });
       }
     });
+    $(document).on('click', '.view-user', function() {
+      var userId = $(this).data('user-id');
+      var userName = $(this).closest('tr').find('td:eq(0)').text(); // 获取同一行的第一个单元格的文本（用户名）
+      window.location.href = 'userinfo.jsp?author=' + encodeURIComponent(userName);
+    });
+
   });
 </script>
 </body>

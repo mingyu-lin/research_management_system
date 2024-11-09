@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xxxx.mapper.SendMessageMapper">
+    <insert id="MessageInsert" keyProperty="messageId" useGeneratedKeys="true" parameterType="xxxx.entity.Message">
+        INSERT into message(senderId,receiverId,receiverName,senderName,content,timestamp) values (#{senderId},#{receiverId},#{receiverName},#{senderName},#{content},Now())
+    </insert>
+</mapper>

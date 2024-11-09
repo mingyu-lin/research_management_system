@@ -15,11 +15,27 @@
     </div>
     <div class="system-name">科研管理系统</div>
     <a href="main.jsp">首页</a>
-    <a href="#">检索</a>
-    <a href="#">私信</a>
-    <a href="#">个人信息</a>
-    <a href="my_paper.jsp">我的论文</a>
-    <a href="#">我的项目</a>
+    <a href="my_paper.jsp">检索</a>
+    <a href="my_message.jsp">我的私信</a>
+    <a href="sendmessage.jsp">发送私信</a>
+    <c:choose>
+      <c:when test="${sessionScope.role == 'admin'}">
+        <a href="add_news.jsp">发布新闻</a>
+        <a href="my_paper.jsp?paperFlag=1">论文审核</a>
+        <a href="#">项目审核</a>
+        <a href="user_management.jsp">用户管理</a>
+      </c:when>
+
+
+      <c:when test="${sessionScope.role == 'user'}">
+        <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
+        <a href="#" id="myPapersLink">我的论文</a>
+        <a href="#">我的项目</a>
+        <a href="add_paper.jsp?paperAuthor=${sessionScope.username}">提交论文</a>
+        <a href="#">提交项目</a>
+        <a href="#">我的数据</a>
+      </c:when>
+    </c:choose>
   </div>
   <div class="content-container">
     <div class="header">
@@ -46,7 +62,7 @@
           </div>
           <div>
             <label for="newsWriter">作者：</label>
-            <input type="text" id="newsWriter" name="newsWriter" required>
+            <input type="text" id="newsWriter" name="newsWriter" readonly>
           </div>
           <button type="submit">提交</button>
         </form>
@@ -65,7 +81,7 @@
 
     $('.username').text(userInfo.username);
     $('.role').text(userInfo.role);
-
+    $('#newsWriter').val(userInfo.username).prop('readonly', true);
     $('#addNewsForm').on('submit', function(e) {
       e.preventDefault(); // 防止默认提交行为
 

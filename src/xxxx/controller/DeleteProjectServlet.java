@@ -2,7 +2,7 @@ package xxxx.controller;
 
 import com.google.gson.Gson;
 import xxxx.entity.value.MessageModel;
-import xxxx.service.DeletePaperService;
+import xxxx.service.DeleteProjectService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,27 +12,26 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/deletePaper")
-public class DeletePaperServlet extends HttpServlet {
+@WebServlet("/deleteProject")
+public class DeleteProjectServlet extends HttpServlet {
 
-    private DeletePaperService paperService=new DeletePaperService();
+    private DeleteProjectService projectService = new DeleteProjectService();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("paperId"));//
+        int id = Integer.parseInt(req.getParameter("projectId"));
         System.out.println(id);
-
 
         try {
             resp.setContentType("application/json;charset=UTF-8");
             PrintWriter out = resp.getWriter();
-            MessageModel messageModel = paperService.deletePaper(id);//获
+            MessageModel messageModel = projectService.deleteProject(id);
             // 序列化为 JSON
             String json = new Gson().toJson(messageModel);
             out.print(json);
-            out.flush();//确保更新
+            out.flush();
         } catch (Exception e) {
-            e.printStackTrace(); // 打印堆栈跟踪
+            e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().print("{\"error\": \"服务器内部错误\"}");
         }

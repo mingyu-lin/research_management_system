@@ -19,7 +19,7 @@
     </div>
     <div class="system-name">科研管理系统</div>
     <a href="main.jsp">首页</a>
-    <a href="#">检索</a>
+    <a href="my_paper.jsp">检索</a>
     <a href="my_message.jsp">我的私信</a>
     <a href="sendmessage.jsp">发送私信</a>
     <c:choose>
@@ -35,6 +35,8 @@
         <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
         <a href="#" id="myPapersLink">我的论文</a>
         <a href="#">我的项目</a>
+        <a href="add_paper.jsp?paperAuthor=${sessionScope.username}">提交论文</a>
+        <a href="#">提交项目</a>
         <a href="#">我的数据</a>
       </c:when>
     </c:choose>

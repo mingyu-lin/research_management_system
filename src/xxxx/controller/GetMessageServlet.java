@@ -25,7 +25,7 @@ public class GetMessageServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         //
-        int parameter = (int) session.getAttribute("userId");
+        int parameter = (int) session.getAttribute("userid");
         messageModel = service.getMessage(parameter);
         //
 

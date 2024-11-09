@@ -129,6 +129,7 @@ textarea {
 }
 
 button[type="submit"] {
+    width: 20%;
     background-color: #007bff; /* 按钮背景色 */
     color: white; /* 按钮文字颜色 */
     border: none; /* 无边框 */

@@ -72,20 +72,58 @@ html, body {
     background-color: #f8f9fa; /* 更浅的背景色 */
     margin-top: 20px; /* 预留头部栏的空间 */
     border-radius: 5px; /* 增加圆角 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+    flex-direction: column;
+}
+
+h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
     margin: 10px 0 5px; /* 标签的上下间距 */
+    font-weight: bold;
+    color: #333;
 }
 
 input[type="text"], input[type="date"], textarea {
-    width: 100%; /* 输入框和文本区域宽度100% */
+    width: 90%; /* 输入框和文本区域宽度100% */
     padding: 10px; /* 内边距 */
     border: 1px solid #ccc; /* 边框颜色 */
     border-radius: 4px; /* 圆角 */
     margin-bottom: 15px; /* 下间距 */
+    font-size: 1em; /* 字体大小 */
+    color: #333;
 }
+
+textarea {
+    resize: vertical; /* 允许调整文本框高度 */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* 上间距 */
+}
+
+button {
+    background-color: #007bff; /* 按钮颜色 */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* 按钮内边距 */
+    border-radius: 5px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停效果 */
+    transition: background-color 0.3s;
+    font-size: 1.1em;
+}
+
+button:hover {
+    background-color: #0056b3; /* 悬停时按钮颜色 */
+}
+
 .back-home {
     color: #007bff; /* 修改为蓝色 */
     text-decoration: none;
@@ -99,15 +137,6 @@ input[type="text"], input[type="date"], textarea {
     background-color: rgba(0, 123, 255, 0.1); /* 悬停时背景色变化 */
 }
 
-button {
-    background-color: #007bff; /* 按钮颜色 */
-    color: white;
-    border: none;
-    padding: 10px 15px; /* 按钮内边距 */
-    border-radius: 4px; /* 圆角 */
-    cursor: pointer; /* 鼠标悬停效果 */
-    transition: background-color
-}
 .logout {
     margin-left: 20px; /* 增加与用户名和身份的间距 */
     color: white;

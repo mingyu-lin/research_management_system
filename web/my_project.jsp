@@ -5,10 +5,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>论文</title>
+  <title>项目</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" type="text/css" href="my_paper_style.css"> <!-- 引入CSS文件 -->
+  <link rel="stylesheet" type="text/css" href="my_project_style.css"> <!-- 引入CSS文件 -->
 </head>
 <body>
 <div class="container">
@@ -18,24 +17,19 @@
     </div>
     <div class="system-name">科研管理系统</div>
     <a href="main.jsp">首页</a>
-    <a href="my_paper.jsp">检索</a>
+    <a href="my_project.jsp">检索</a>
     <a href="my_message.jsp">我的私信</a>
     <a href="sendmessage.jsp">发送私信</a>
     <c:choose>
       <c:when test="${sessionScope.role == 'admin'}">
         <a href="add_news.jsp">发布新闻</a>
-        <a href="my_paper.jsp?paperFlag=1">论文审核</a>
-        <a href="#">项目审核</a>
+        <a href="my_project.jsp?projectFlag=1">项目审核</a>
         <a href="user_management.jsp">用户管理</a>
       </c:when>
-
-
       <c:when test="${sessionScope.role == 'user'}">
         <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
-        <a href="#" id="myPapersLink">我的论文</a>
-        <a href="#">我的项目</a>
-        <a href="add_paper.jsp?paperAuthor=${sessionScope.username}">提交论文</a>
-        <a href="#">提交项目</a>
+        <a href="#" id="myProjectsLink">我的项目</a>
+        <a href="add_project.jsp?projectManager=${sessionScope.username}">提交项目</a>
         <a href="#">我的数据</a>
       </c:when>
     </c:choose>
@@ -56,27 +50,27 @@
         <form id="searchForm" class="search-form">
           <label for="searchType" class="search-label"></label>
           <select id="searchType" name="searchType" class="search-select">
-            <option value="论文">论文</option>
             <option value="项目">项目</option>
           </select>
 
           <label for="searchTitle" class="search-label"></label>
           <input type="text" id="searchTitle" name="searchTitle" class="search-input" placeholder="请输入标题关键字" />
 
-          <label for="searchAuthor" class="search-label"></label>
-          <input type="text" id="searchAuthor" name="searchAuthor" class="search-input" placeholder="请输入作者/项目关键字" />
+          <label for="searchManager" class="search-label"></label>
+          <input type="text" id="searchManager" name="searchManager" class="search-input" placeholder="请输入项目经理关键字" />
 
           <button type="submit" class="search-button">搜索</button>
         </form>
       </div>
-      <div id="papers">
-        <table class="papers-table">
+      <div id="projects">
+        <table class="projects-table">
           <thead>
           <tr>
             <th>标题</th>
-            <th>作者</th>
+            <th>项目经理</th>
             <th>等级</th>
-            <th>发布时间</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
             <th>状态</th>
             <th>操作</th>
           </tr>
@@ -93,31 +87,26 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    // 使用 URLSearchParams 获取查询参数
     const urlParams = new URLSearchParams(window.location.search);
-    const paperFlag = urlParams.get('paperFlag');
-    const paperAuthor = urlParams.get('paperAuthor'); // 注意拼写
-    const paperTitle = urlParams.get('paperTitle');
+    const projectFlag = urlParams.get('projectFlag');
+    const projectManager = urlParams.get('projectManager');
+    const projectTitle = urlParams.get('projectTitle');
     $.ajax({
-      url: '/getPaper',
+      url: '/getProject',
       method: 'GET',
       data: {
-        paperFlag: paperFlag || '', // 如果为 null，发送空字符串
-        paperAuthor: paperAuthor || '%', // 如果为 null，发送空字符串
-        paperTitle: paperTitle || '%' // 如果为 null，发送空字符串
+        projectFlag: projectFlag || '',
+        projectManager: projectManager || '%',
+        projectTitle: projectTitle || '%'
       },
       success: function(response) {
-        console.log('Received response:', response);
         if (response.code === 1 && response.list && response.list.length > 0) {
-          var $papersTableBody = $('#papers .papers-table tbody');
-          $papersTableBody.empty(); // 清空现有表格行
+          var $projectsTableBody = $('#projects .projects-table tbody');
+          $projectsTableBody.empty();
 
           response.list.forEach(function(item) {
-            console.log(item);
-
-            // 使用 jQuery 动态创建表格行
             let statusText = '';
-            switch (item.paperFlag) {
+            switch (item.projectFlag) {
               case -1:
                 statusText = '待审核';
                 break;
@@ -132,50 +121,46 @@
                 break;
             }
 
-            // 使用 jQuery 动态创建表格行
-            var $paperRow = $('<tr></tr>')
-                    .append($('<td></td>').text(item.paperTitle))
+            var $projectRow = $('<tr></tr>')
+                    .append($('<td></td>').text(item.projectTitle))
                     .append($('<td></td>')
-                            .append($('<a class="author-link"></a>') // 添加 class
-                                    .text(item.paperAuthor)
-                                    .attr('href', 'userinfo.jsp?author=' + item.paperAuthor)
+                            .append($('<a class="manager-link"></a>')
+                                    .text(item.projectManager)
+                                    .attr('href', 'userinfo.jsp?author=' + item.projectManager)
                             )
                     )
-                    .append($('<td></td>').text(item.paperLevel))
-                    .append($('<td></td>').text(item.paperPublicationTime))
-                    .append($('<td></td>').text(statusText)) // 添加状态列
+                    .append($('<td></td>').text(item.projectLevel))
+                    .append($('<td></td>').text(item.projectBeginTime))
+                    .append($('<td></td>').text(item.projectEndTime))
+                    .append($('<td></td>').text(statusText))
                     .append($('<td></td>')
-                            .append($('<button class="view-paper" data-paper-id="' + item.paperId + '"></button>').text('查看'))
+                            .append($('<button class="view-project" data-project-id="' + item.projectId + '"></button>').text('查看'))
                     );
 
-
-            // 将生成的表格行追加到表格容器中
-            $papersTableBody.append($paperRow);
-            console.log($paperRow);
+            $projectsTableBody.append($projectRow);
           });
         } else {
-          $('#papers').html('<p>' + response.msg + '</p>');
+          $('#projects').html('<p>' + response.msg + '</p>');
         }
       },
       error: function() {
-        $('#papers').html('<p>加载数据时出错。</p>');
+        $('#projects').html('<p>加载数据时出错。</p>');
       }
     });
-    $(document).on('click', '.view-paper', function() {
-      var paperId = $(this).data('paper-id'); // 获取Paper ID
-      window.location.href = 'onepaper_display.jsp?paperId=' + paperId; // 跳转到Paper展示页面
+
+    $(document).on('click', '.view-project', function() {
+      var projectId = $(this).data('project-id');
+      window.location.href = 'oneproject_display.jsp?projectId=' + projectId;
     });
+
     $('.search-button').click(function(event) {
-      event.preventDefault(); // 阻止表单的默认提交
+      event.preventDefault();
 
-      // 获取输入框的值
       var searchTitle = $('#searchTitle').val();
-      var searchAuthor = $('#searchAuthor').val();
+      var searchManager = $('#searchManager').val();
 
-      // 构造跳转URL，附带查询参数
-      var url = 'my_paper.jsp?paperTitle=' + encodeURIComponent(searchTitle) + '&paperAuthor=' + encodeURIComponent(searchAuthor);
+      var url = 'my_project.jsp?projectTitle=' + encodeURIComponent(searchTitle) + '&projectManager=' + encodeURIComponent(searchManager);
 
-      // 跳转到my_paper.jsp，并附上参数
       window.location.href = url;
     });
   });

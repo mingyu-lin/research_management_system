@@ -35,28 +35,33 @@
 
         <div class="main-area">
             <div class="user-profile">
-                <h2 class="profile-name">用户姓名</h2>
+                <h2 class="profile-name">个人信息</h2>
+                <div class="profile-field">
+                    <label for="profile-name">姓名：</label>
+                    <input type="text" id="profile-name" class="profile-name" readonly>
+                </div>
                 <div class="profile-field">
                     <label for="profile-email">邮箱：</label>
-                    <input type="email" id="profile-email" class="profile-email">
+                    <input type="email" id="profile-email" class="profile-email" readonly>
                 </div>
                 <div class="profile-field">
                     <label for="profile-phone">电话：</label>
-                    <input type="tel" id="profile-phone" class="profile-phone">
+                    <input type="tel" id="profile-phone" class="profile-phone" readonly>
                 </div>
                 <div class="profile-field">
                     <label for="profile-postscript">备注：</label>
-                    <input type="text" id="profile-postscript" class="profile-postscript">
+                    <input type="text" id="profile-postscript" class="profile-postscript" readonly>
                 </div>
                 <div class="profile-field">
                     <label for="profile-create-time">注册时间：</label>
-                    <input type="text" id="profile-create-time" class="profile-create-time">
+                    <input type="text" id="profile-create-time" class="profile-create-time" readonly>
                 </div>
 
                 <!-- 新增保存和返回按钮 -->
                 <div class="button-group">
-                    <button id="save-button" class="button save-button">保存</button>
+                    <button id="save-button" class="button save-button" style="display: none;">保存</button>
                     <button id="back-button" class="button back-button">返回</button>
+                    <button id="message-button" class="button message-button" style="display: none;">私信</button>
                 </div>
             </div>
 
@@ -67,6 +72,8 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        const sessionRole = '<%= session.getAttribute("role") %>';
+        const sessionUsername = '<%= session.getAttribute("username") %>';
         var userId = new URLSearchParams(window.location.search).get('author'); // 获取URL中的userId
         if (userId) {
             $.ajax({
@@ -75,7 +82,7 @@
                 success: function(response) {
                     if (response.code === 1 && response.object) {
                         var user = response.object;
-                        $('.profile-name').text(user.userName);
+                        $('#profile-name').val(user.userName);
                         $('#profile-email').val(user.userEmail);
                         $('#profile-phone').val(user.userPhone);
                         $('#profile-postscript').val(user.userPostscript);
@@ -83,6 +90,17 @@
                         $('.profile-avatar').attr('src', 'img/default_avatar.png'); // 可以根据实际情况替换为实际头像URL
                     } else {
                         $('.user-profile').html('<p>' + response.msg + '</p>');
+                    }
+                    // Check role and username conditions
+                    const isCurrentUser = sessionUsername === user.userName;
+                    if (sessionRole === 'admin') {
+                        $('#save-button, #message-button').show();
+                        $('.profile-field input').prop('readonly', false);
+                    } else if (sessionRole === 'user' && isCurrentUser) {
+                        $('#save-button').show();
+                        $('.profile-field input').prop('readonly', false);
+                    } else if (sessionRole === 'user' && !isCurrentUser) {
+                        $('#message-button').show();
                     }
                 },
                 error: function() {
@@ -116,6 +134,10 @@
             // 返回按钮事件
             $('#back-button').on('click', function() {
                 window.history.back();
+            });
+            $('#message-button').on('click', function() {
+                var receiver = $('#profile-name').val(); // 获取当前显示的用户名
+                window.location.href = 'sendmessage.jsp?receiver=' + encodeURIComponent(receiver);
             });
         }
     });

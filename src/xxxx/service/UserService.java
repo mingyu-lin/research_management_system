@@ -145,4 +145,10 @@ public class UserService {
         }
     }
 
+    public User Finduser(String sender) {
+        SqlSession session = GetSqlSession.createSqlSession();
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+        User user = userMapper.queryUserByName(sender);
+        return user;
+    }
 }

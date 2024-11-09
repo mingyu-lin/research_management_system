@@ -11,4 +11,8 @@
     <select id="getNewsById" resultType="xxxx.entity.News">
         SELECT * FROM news WHERE newsId = #{newsId}
     </select>
+    <insert id="addNews" parameterType="xxxx.entity.News">
+        INSERT INTO news (ifPublish, newsTitle, newsWriter, publishTime, newsContent)
+        VALUES ( 1, #{newsTitle}, #{newsWriter}, Now(), #{newsContent})
+    </insert>
 </mapper>

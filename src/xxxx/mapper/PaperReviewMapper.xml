@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xxxx.mapper.PaperReviewMapper">
+
+    <!-- 批准论文审核 -->
+    <update id="approvePaper" parameterType="map">
+        UPDATE paper
+        SET paperFlag = #{adminId}
+        WHERE paperId = #{paperId}
+    </update>
+
+    <!-- 拒绝论文审核 -->
+    <update id="declinePaper" parameterType="map">
+        UPDATE paper
+        SET paperFlag = 0
+        WHERE paperId = #{paperId}
+    </update>
+
+</mapper>

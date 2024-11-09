@@ -15,12 +15,28 @@
             <img src="img/logo.png" alt="网站Logo">
         </div>
         <div class="system-name">科研管理系统</div>
-        <a href="#">首页</a>
-        <a href="#">检索</a>
-        <a href="#">私信</a>
-        <a href="#">个人信息</a>
-        <a href="#">我的论文</a>
-        <a href="#">我的项目</a>
+        <a href="main.jsp">首页</a>
+        <a href="my_paper.jsp">检索</a>
+        <a href="my_message.jsp">我的私信</a>
+        <a href="sendmessage.jsp">发送私信</a>
+        <c:choose>
+            <c:when test="${sessionScope.role == 'admin'}">
+                <a href="add_news.jsp">发布新闻</a>
+                <a href="my_paper.jsp?paperFlag=1">论文审核</a>
+                <a href="#">项目审核</a>
+                <a href="user_management.jsp">用户管理</a>
+            </c:when>
+
+
+            <c:when test="${sessionScope.role == 'user'}">
+                <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
+                <a href="#" id="myPapersLink">我的论文</a>
+                <a href="#">我的项目</a>
+                <a href="add_paper.jsp?paperAuthor=${sessionScope.username}">提交论文</a>
+                <a href="#">提交项目</a>
+                <a href="#">我的数据</a>
+            </c:when>
+        </c:choose>
     </div>
     <div class="content-container">
         <div class="header">
@@ -40,7 +56,7 @@
                 <input type="text" id="paperTitle" name="paperTitle" required>
 
                 <label for="paperAuthor">作者:</label>
-                <input type="text" id="paperAuthor" name="paperAuthor" required>
+                <input type="text" id="paperAuthor" name="paperAuthor" readonly required>
 
                 <label for="paperPublicationVenue">发表地点:</label>
                 <input type="text" id="paperPublicationVenue" name="paperPublicationVenue">
@@ -51,10 +67,15 @@
                 <label for="paperAbstract">摘要:</label>
                 <textarea id="paperAbstract" name="paperAbstract" rows="4"></textarea>
 
+                <label for="paperLevel">等级:</label>
+                <input type="text" id="paperLevel" name="paperLevel" required>
+
                 <label for="paperPublicationTime">发表时间:</label>
                 <input type="date" id="paperPublicationTime" name="paperPublicationTime">
 
-                <button type="submit" id="addBtn">提交</button>
+                <div class="button-container">
+                    <button type="submit" id="addBtn">提交</button>
+                </div>
             </form>
         </div>
     </div>
@@ -63,32 +84,76 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        var paperId = new URLSearchParams(window.location.search).get('paperId');
+        // 获取URL中的参数
+        var urlParams = new URLSearchParams(window.location.search);
 
-        if (paperId) {
+        // 填充表单输入框
+        function fillFormFromParams(params) {
+            if (params.has('paperTitle')) {
+                $('#paperTitle').val(params.get('paperTitle'));
+            }
+            if (params.has('paperAuthor')) {
+                $('#paperAuthor').val(params.get('paperAuthor'));
+            }
+            if (params.has('paperPublicationVenue')) {
+                $('#paperPublicationVenue').val(params.get('paperPublicationVenue'));
+            }
+            if (params.has('Keywords')) {
+                $('#Keywords').val(params.get('Keywords'));
+            }
+            if (params.has('paperAbstract')) {
+                $('#paperAbstract').val(params.get('paperAbstract'));
+            }
+            if (params.has('paperPublicationTime')) {
+                $('#paperPublicationTime').val(params.get('paperPublicationTime'));
+            }
+            if (params.has('paperLevel')) {
+                $('#paperLevel').val(params.get('paperLevel'));
+            }
+        }
+
+        // 调用函数填充表单
+        fillFormFromParams(urlParams);
+
+        // 处理表单提交
+        $('#paperForm').on('submit', function(event) {
+            event.preventDefault(); // 阻止表单默认提交
+
+            var paperTitle = $('#paperTitle').val();
+            var paperAuthor = $('#paperAuthor').val();
+            var paperPublicationVenue = $('#paperPublicationVenue').val();
+            var keywords = $('#Keywords').val();
+            var paperAbstract = $('#paperAbstract').val();
+            var paperPublicationTime = $('#paperPublicationTime').val();
+            var paperLevel = $('#paperLevel').val(); // 新增的等级输入框
+
             $.ajax({
-                url: '/getOnePaper?paperId=' + paperId,
-                method: 'GET',
+                url: '/addPaper', // 发送消息的后端接口
+                method: 'POST',
+                data: {
+                    paperTitle: paperTitle,
+                    paperAuthor: paperAuthor,
+                    paperPublicationVenue: paperPublicationVenue,
+                    keywords: keywords,
+                    paperAbstract: paperAbstract,
+                    paperPublicationTime: paperPublicationTime,
+                    paperLevel: paperLevel // 新增的等级字段
+                },
                 success: function(response) {
-                    if (response.code === 1 && response.object) {
-                        var paper = response.object;
-                        $('#paperTitle').val(paper.paperTitle);
-                        $('#paperAuthor').val(paper.paperAuthor);
-                        $('#paperPublicationVenue').val(paper.paperPublicationVenue);
-                        $('#Keywords').val(paper.keywords);
-                        $('#paperAbstract').val(paper.paperAbstract);
-                        $('#paperPublicationTime').val(paper.paperPublicationTime);
+                    if (response.code === 1) {
+                        alert('论文添加成功!');
+                        // 可选择重定向或清空表单
+                        $('#paperForm')[0].reset();
                     } else {
-                        alert('加载论文数据失败: ' + response.msg);
+                        alert('论文添加失败: ' + response.msg);
                     }
                 },
                 error: function() {
-                    alert('获取论文数据时出错。');
+                    alert('发送请求时出错，请稍后重试。');
                 }
             });
-        }
+        });
     });
 </script>
 </body>
 </html>
-

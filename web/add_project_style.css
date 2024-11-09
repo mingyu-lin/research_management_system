@@ -1,8 +1,9 @@
-/* 页面布局 */
+/* add_project_style.css */
+
 html, body {
     height: 100%;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif; /* 使用 Roboto 字体 */
 }
 
 .container {
@@ -19,7 +20,7 @@ html, body {
 
 .sidebar {
     width: 200px;
-    background-color: rgba(92, 126, 250);
+    background-color: rgba(92, 126, 250); /* 深蓝色背景 */
     color: white;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
@@ -69,81 +70,61 @@ html, body {
 .main-area {
     flex-grow: 1;
     padding: 30px;
-    background: linear-gradient(145deg, #f0f4f8, #ffffff); /* 渐变背景 */
+    background-color: #f8f9fa;
     margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); /* 增加阴影 */
-    display: flex;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     flex-direction: column;
-    align-items: center;
 }
 
 h2 {
-    font-size: 24px;
-    font-weight: 600;
     color: #333;
+    font-size: 2em;
     margin-bottom: 20px;
 }
 
 label {
     display: block;
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #555;
-}
-
-input[type="text"], textarea {
-    width: 90%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
+    margin: 10px 0 5px;
+    font-weight: bold;
     color: #333;
+}
+
+input[type="text"], input[type="date"], textarea {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     margin-bottom: 15px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 输入框阴影 */
-}
-
-input[type="text"]:focus, textarea:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* 聚焦时的蓝色阴影 */
-}
-
-
-button {
-    align-self: center; /* 仅让按钮居中 */
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-button:hover {
-    background-color: #0056b3;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* 悬停时增加阴影 */
-}
-
-button:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.7); /* 聚焦时的蓝色光环 */
+    font-size: 1em;
+    color: #333;
 }
 
 textarea {
     resize: vertical;
-    height: 150px;
 }
 
-form {
-    width: 100%;
-    max-width: 600px;
+.button-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* 保持其他元素左对齐 */
+    justify-content: center;
+    margin-top: 20px;
 }
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.1em;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
 .back-home {
     color: #007bff;
     text-decoration: none;
@@ -170,4 +151,5 @@ form {
 
 .logout:hover {
     background-color: #c82333;
+    color: white;
 }

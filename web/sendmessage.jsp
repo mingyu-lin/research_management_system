@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>发送私信</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="add_paper_style.css"> <!-- 引入CSS文件 -->
+  <link rel="stylesheet" type="text/css" href="sendmessage_style.css"> <!-- 引入CSS文件 -->
 </head>
 <body>
 <div class="container">
@@ -37,12 +37,14 @@
       <h2>发送私信</h2>
       <form id="messageForm">
         <label for="receiverName">接收者:</label>
-        <input type="text" id="receiverName" name="receiverName" >
+        <input type="text" id="receiverName" name="receiverName">
 
         <label for="messageContent">消息内容:</label>
         <textarea id="messageContent" name="messageContent" rows="4" required></textarea>
 
+
         <button type="submit" id="sendBtn">发送</button>
+
       </form>
     </div>
   </div>
@@ -68,11 +70,11 @@
       $.ajax({
         url: '/sendMessage', // 发送消息的后端接口
         method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
+
+        data: {
           receiverName: receiverName,
           content: messageContent
-        }),
+        },
         success: function(response) {
           if (response.code === 1) {
             alert('消息发送成功!');

@@ -2,6 +2,8 @@ package xxxx.mapper;
 
 import xxxx.entity.Message;
 
+import java.util.List;
+
 public interface getMessageMapper {
-    Message getMessage(int id);
+    List<Message> getMessage(int id);
 }

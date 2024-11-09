@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的私信</title>
+  <title>私信</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="my_message_style.css"> <!-- 引入CSS文件 -->
 </head>
@@ -17,12 +17,28 @@
       <img src="img/logo.png" alt="网站Logo">
     </div>
     <div class="system-name">科研管理系统</div>
-    <a href="#">首页</a>
-    <a href="#">检索</a>
-    <a href="my_message.jsp">私信</a>
-    <a href="#">个人信息</a>
-    <a href="#">我的论文</a>
-    <a href="#">我的项目</a>
+    <a href="main.jsp">首页</a>
+    <a href="my_paper.jsp">检索</a>
+    <a href="my_message.jsp">我的私信</a>
+    <a href="sendmessage.jsp">发送私信</a>
+    <c:choose>
+      <c:when test="${sessionScope.role == 'admin'}">
+        <a href="add_news.jsp">发布新闻</a>
+        <a href="my_paper.jsp?paperFlag=1">论文审核</a>
+        <a href="#">项目审核</a>
+        <a href="user_management.jsp">用户管理</a>
+      </c:when>
+
+
+      <c:when test="${sessionScope.role == 'user'}">
+        <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
+        <a href="#" id="myPapersLink">我的论文</a>
+        <a href="#">我的项目</a>
+        <a href="add_paper.jsp?paperAuthor=${sessionScope.username}">提交论文</a>
+        <a href="#">提交项目</a>
+        <a href="#">我的数据</a>
+      </c:when>
+    </c:choose>
   </div>
   <div class="content-container">
     <div class="header">
@@ -66,7 +82,7 @@
             var $messageItem = $('<li class="message-item"></li>')
                     .append($('<span class="sender-name"></span>').text(item.senderName)) // 显示发送者姓名
                     .append($('<span class="message-content"></span>').text(item.content)) // 显示内容
-                    .append($('<span class="message-time"></span>').text(new Date(item.timestamp).toLocaleString())) // 显示时间
+                    .append($('<span class="message-time"></span>').text(new Date(item.timestamp).toLocaleDateString())) // 显示时间
                     .append($('<button class="reply-message" data-receiver-name="' + item.senderName + '" data-receiver-id="' + item.receiverId + '"></button>').text('回复')); // 回复按钮
 
             // 将生成的私信项追加到列表中

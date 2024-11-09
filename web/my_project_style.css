@@ -73,7 +73,8 @@ html, body {
     border-radius: 5px;
 }
 
-#user-list {
+/* 样式保留原样，仅更换类名 */
+#projects {
     width: 100%;
     max-width: 1000px;
     margin: 20px auto;
@@ -83,61 +84,51 @@ html, body {
     padding: 20px;
 }
 
-.user-table {
+.projects-table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
 }
 
-.user-table th,
-.user-table td {
+.projects-table th,
+.projects-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
-.user-table thead {
+.projects-table thead {
     background-color: #f2f2f2;
 }
 
-.user-table tbody tr {
+.projects-table tbody tr {
     border-bottom: 1px solid #ddd;
 }
 
-.user-table tbody tr:last-child {
+.projects-table tbody tr:last-child {
     border-bottom: none;
 }
 
-.user-table tbody tr:hover {
+.projects-table tbody tr:hover {
     background-color: #e9ecef;
 }
 
-.delete-user {
-    background-color: #dc3545;
+.view-project {
+    background-color: #007bff;
     color: white;
     border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.delete-user:hover {
-    background-color: #c82333;
+.view-project:hover {
+    background-color: #0056b3;
     transform: translateY(-2px);
 }
-.view-user{
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-.view-user:hover{
-    background-color: rgba(0, 123, 255, 0.1);
-}
+
 .back-home {
     color: #007bff;
     text-decoration: none;
@@ -177,4 +168,57 @@ html, body {
 .logout:hover {
     background-color: #c82333;
     color: white;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-select, .search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 150px;
+}
+
+.search-label {
+    font-weight: bold;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.search-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+.author-link {
+    color: #007bff; /* 链接颜色 */
+    text-decoration: none; /* 去掉下划线 */
+    font-weight: bold; /* 加粗字体 */
+    transition: color 0.3s; /* 添加过渡效果 */
+}
+
+.author-link:hover {
+    color: #0056b3; /* 鼠标悬停时的颜色 */
+    text-decoration: underline; /* 悬停时显示下划线 */
 }

@@ -100,5 +100,22 @@ public class PaperGetService {
 
         return messageModel;//返回新闻
     }
+    public static MessageModel paperInsert(Paper paper){
+        MessageModel messageModel = new MessageModel();
+        SqlSession session= GetSqlSession.createSqlSession();
+        PaperGetMapper paperGetMapper = session.getMapper(PaperGetMapper.class);
+       int res= paperGetMapper.paperInsert(paper);
+        session.commit();
+        if(res>0){
+            messageModel.setCode(1);
+            messageModel.setMsg("success");
+        }
+        else{
+            messageModel.setCode(0);
+            messageModel.setMsg("fail");
+        }
+
+        return messageModel;
+    }
 
 }

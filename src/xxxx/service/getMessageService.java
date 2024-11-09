@@ -20,6 +20,7 @@ public class getMessageService {
         getMessageMapper mapper = session.getMapper(getMessageMapper.class);//
         List<Message> info=mapper.getMessage(id);//调用mapper层获取新闻
 
+        messageModel.setCount(info.size());
         if(info==null){
             Message empty_info = new Message();//
             messageModel.setObject(empty_info);

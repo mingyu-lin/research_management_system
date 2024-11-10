@@ -6,4 +6,17 @@
     <insert id="projectInsert" parameterType="xxxx.entity.Project" useGeneratedKeys="true" keyProperty="projectId">
         insert into project(projectTitle,projectBeginTime,projectEndTime,projectManager,projectSource,projectFunding,projectFlag,projectLevel) values (#{projectTitle},#{projectBeginTime},#{projectEndTime},#{projectManager},#{projectSource},#{projectFunding},-1,#{projectLevel})
     </insert>
+    <update id="projectUpdate" parameterType="xxxx.entity.Project">
+        UPDATE project
+        SET
+            projectTitle = #{projectTitle},
+            projectBeginTime = #{projectBeginTime},
+            projectEndTime = #{projectEndTime},
+            projectManager = #{projectManager},
+            projectSource = #{projectSource},
+            projectFunding = #{projectFunding},
+            projectFlag = #{projectFlag},
+            projectLevel = #{projectLevel}
+        WHERE projectId = #{projectId}
+    </update>
 </mapper>

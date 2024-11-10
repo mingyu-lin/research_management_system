@@ -27,4 +27,24 @@ public class AddProjectService {
         return messageModel;
 
     }
+
+    public MessageModel projectUpdate(Project project) {
+        MessageModel messageModel = new MessageModel();
+        SqlSession session = GetSqlSession.createSqlSession();
+        AddProjectMapper addProjectMapper = session.getMapper(AddProjectMapper.class);
+        addProjectMapper.projectUpdate(project);
+        session.commit();
+        int res= addProjectMapper.projectInsert(project);
+        if(res>0){
+            messageModel.setCode(1);
+            messageModel.setMsg("success");
+        }
+        else{
+            messageModel.setCode(0);
+            messageModel.setMsg("fail");
+        }
+
+
+        return messageModel;
+    }
 }

@@ -89,9 +89,12 @@
     $(document).ready(function() {
         // 获取URL中的参数
         var urlParams = new URLSearchParams(window.location.search);
-
+        var action="add";
         // 填充表单输入框
         function fillFormFromParams(params) {
+            if(params.has('action')){
+                action=params.get('action');
+            }
             if (params.has('paperTitle')) {
                 $('#paperTitle').val(params.get('paperTitle'));
             }
@@ -134,6 +137,7 @@
                 url: '/addPaper', // 发送消息的后端接口
                 method: 'POST',
                 data: {
+                    action: action,
                     paperTitle: paperTitle,
                     paperAuthor: paperAuthor,
                     paperPublicationVenue: paperPublicationVenue,

@@ -23,7 +23,7 @@ public class AddProjectServlet extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
 
         Project project = new Project();
-
+        String action = req.getParameter("action");
         project.setProjectTitle(req.getParameter("projectTitle"));
         project.setProjectManager(req.getParameter("projectManager"));
         project.setProjectFunding(Integer.valueOf(req.getParameter("projectFunding")));
@@ -34,9 +34,13 @@ public class AddProjectServlet extends HttpServlet {
 
         try{
 
-
-            MessageModel messageModel = addProjectService.projectInsert(project);
-
+            MessageModel messageModel = new MessageModel();
+            if(action.equals("add")) {
+                messageModel = addProjectService.projectInsert(project);
+            }
+            else if(action.equals("edit")) {
+                messageModel=addProjectService.projectUpdate(project);
+            }
             resp.setContentType("application/json;charset=UTF-8");
             PrintWriter out = resp.getWriter();
             // 序列化为 JSON

@@ -123,7 +123,7 @@
 
         // 编辑按钮的点击事件
         $('#edit-button').on('click', function() {
-            var url = 'add_paper.jsp?paperId=' + paperId +
+            var url = 'add_paper.jsp?action=' + "edit" +
                 '&paperTitle=' + encodeURIComponent(paper.paperTitle) +
                 '&paperAuthor=' + encodeURIComponent(paper.paperAuthor) +
                 '&paperPublicationVenue=' + encodeURIComponent(paper.paperPublicationVenue) +

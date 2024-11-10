@@ -79,14 +79,8 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script>
   $(document).ready(function() {
-    const userInfo = {
-      username: "张三",
-      role: "管理员"
-    };
 
-    $('.username').text(userInfo.username);
-    $('.role').text(userInfo.role);
-    $('#newsWriter').val(userInfo.username).prop('readonly', true);
+    $('#newsWriter').val("${sessionScope.username}").prop('readonly', true);
     $('#addNewsForm').on('submit', function(e) {
       e.preventDefault(); // 防止默认提交行为
 

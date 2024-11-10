@@ -25,6 +25,7 @@ public class addPaperServlet extends HttpServlet {
 
         Paper InsertPaper = new Paper();
         //写入参数
+
         InsertPaper.setPaperTitle(req.getParameter("paperTitle"));
         InsertPaper.setPaperAuthor(req.getParameter("paperAuthor"));
         InsertPaper.setPaperPublicationVenue(req.getParameter("paperPublicationVenue"));
@@ -32,14 +33,18 @@ public class addPaperServlet extends HttpServlet {
         InsertPaper.setPaperAbstract(req.getParameter("paperAbstract"));
         InsertPaper.setPaperPublicationTime(req.getParameter("paperPublicationTime"));
         InsertPaper.setPaperLevel(req.getParameter("paperLevel"));
-
+        String action = req.getParameter("action");
         System.out.println("Received papertitle: " + InsertPaper.getPaperTitle());
         System.out.println("Received paperauthor: " + InsertPaper.getPaperAuthor());
 
         try{
-
-            MessageModel messageModel = paperGetService.paperInsert(InsertPaper);
-
+            MessageModel messageModel=new MessageModel();
+            if(action.equals("add")) {
+                messageModel = paperGetService.paperInsert(InsertPaper);
+            }
+            else {
+                messageModel=paperGetService.paperUpdate(InsertPaper);
+            }
             resp.setContentType("application/json;charset=UTF-8");
             PrintWriter out = resp.getWriter();
             // 序列化为 JSON

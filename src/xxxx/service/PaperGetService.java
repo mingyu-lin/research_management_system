@@ -118,4 +118,21 @@ public class PaperGetService {
         return messageModel;
     }
 
+    public MessageModel paperUpdate(Paper paper) {
+        MessageModel messageModel = new MessageModel();
+        SqlSession session= GetSqlSession.createSqlSession();
+        PaperGetMapper paperGetMapper = session.getMapper(PaperGetMapper.class);
+        int res= paperGetMapper.paperUpdate(paper);
+        session.commit();
+        if(res>0){
+            messageModel.setCode(1);
+            messageModel.setMsg("success");
+        }
+        else{
+            messageModel.setCode(0);
+            messageModel.setMsg("fail");
+        }
+
+        return messageModel;
+    }
 }

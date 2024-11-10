@@ -69,7 +69,7 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    var receiverName = 'testName';
+    var receiverName = '<%= session.getAttribute("username") %>';
     $.ajax({
       url: '/getMessages', // 假设有一个接口可以获取私信
       method: 'GET',

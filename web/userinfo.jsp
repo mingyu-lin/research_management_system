@@ -189,7 +189,7 @@
             $('#save-button').on('click', function() {
                 var userData = {
                     userId: userId,
-                    userName: $('.profile-name').text(),
+                    userName: $('#profile-name').val(),
                     userEmail: $('#profile-email').val(),
                     userPhone: $('#profile-phone').val(),
                     userPostscript: $('#profile-postscript').val(),

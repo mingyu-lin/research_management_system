@@ -11,4 +11,6 @@ public interface PaperGetMapper {
     List<Paper> getPaperByTitleAndAuthor_flagPos(@Param("title") String title, @Param("author") String author);
     List<Paper> getPaper_flagNeg1();
     public int paperInsert(Paper paper);
+
+    int paperUpdate(Paper paper);
 }

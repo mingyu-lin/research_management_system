@@ -25,4 +25,17 @@
     <insert id="paperInsert" parameterType="String" useGeneratedKeys="true" keyProperty="paperId">
         insert into paper(paperTitle,paperAuthor,paperPublicationVenue,paperPublicationTime,paperAbstract,Keywords,paperFlag,paperLevel) values (#{paperTitle},#{paperAuthor},#{paperPublicationVenue},#{paperPublicationTime},#{paperAbstract},#{keywords},-1,#{paperLevel})
     </insert>
+    <update id="paperUpdate" parameterType="xxxx.entity.Paper">
+        UPDATE paper
+        SET
+            paperTitle = #{paperTitle},
+            paperAuthor = #{paperAuthor},
+            paperPublicationVenue = #{paperPublicationVenue},
+            paperPublicationTime = #{paperPublicationTime},
+            paperAbstract = #{paperAbstract},
+            Keywords = #{keywords},
+            paperFlag = #{paperFlag},
+            paperLevel = #{paperLevel}
+        WHERE paperId = #{paperId}
+    </update>
 </mapper>

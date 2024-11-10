@@ -123,7 +123,7 @@
 
     // 编辑按钮的点击事件
     $('#edit-button').on('click', function() {
-      var url = 'add_project.jsp?projectId=' + projectId +
+      var url = 'add_project.jsp?action=' + "edit" +
               '&projectTitle=' + encodeURIComponent(project.projectTitle) +
               '&projectManager=' + encodeURIComponent(project.projectManager) +
               '&projectSource=' + encodeURIComponent(project.projectSource) +

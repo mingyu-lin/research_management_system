@@ -127,7 +127,11 @@ textarea {
     resize: vertical; /* 允许垂直调整大小 */
     height: 150px; /* 默认高度 */
 }
-
+.submit-container {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    margin-top: 15px; /* 与表单其他元素的间距 */
+}
 button[type="submit"] {
     width: 20%;
     background-color: #007bff; /* 按钮背景色 */

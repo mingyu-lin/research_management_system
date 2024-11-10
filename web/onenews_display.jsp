@@ -23,7 +23,7 @@
       <c:when test="${sessionScope.role == 'admin'}">
         <a href="add_news.jsp">发布新闻</a>
         <a href="my_paper.jsp?paperFlag=1">论文审核</a>
-        <a href="#">项目审核</a>
+        <a href="my_project.jsp?projectFlag=1">项目审核</a>
         <a href="user_management.jsp">用户管理</a>
       </c:when>
 
@@ -31,10 +31,10 @@
       <c:when test="${sessionScope.role == 'user'}">
         <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
         <a href="#" id="myPapersLink">我的论文</a>
-        <a href="#">我的项目</a>
+        <a href="#" id="myProjectLink">我的项目</a>
         <a href="add_paper.jsp?paperAuthor=${sessionScope.username}">提交论文</a>
-        <a href="#">提交项目</a>
-        <a href="#">我的数据</a>
+        <a href="add_project.jsp?projectManager=${sessionScope.username}">提交项目</a>
+        <a href="mydata.jsp">我的数据</a>
       </c:when>
     </c:choose>
   </div>
@@ -145,6 +145,34 @@
         }
       });
     }
+    $('#myPapersLink').click(function(event) {
+      event.preventDefault(); // 阻止默认行为
+
+      // 从 session 中获取当前用户姓名
+      var username = '<%= session.getAttribute("username") %>';
+      var paperTitle = 'admin';
+
+      // 构建 URL
+      console.log("username:" + username);
+      var url = 'my_paper.jsp?paperAuthor=' + encodeURIComponent(username) + '&paperTitle=' + encodeURIComponent(paperTitle);
+
+      // 跳转到目标页面
+      window.location.href = url;
+    });
+    $('#myProjectLink').click(function(event) {
+      event.preventDefault(); // 阻止默认行为
+
+      // 从 session 中获取当前用户姓名
+      var username = '<%= session.getAttribute("username") %>';
+      var paperTitle = 'admin';
+
+      // 构建 URL
+      console.log("username:" + username);
+      var url = 'my_project.jsp?projectManager=' + encodeURIComponent(username) + '&projectTitle=' + encodeURIComponent(paperTitle);
+
+      // 跳转到目标页面
+      window.location.href = url;
+    });
   });
 
 </script>

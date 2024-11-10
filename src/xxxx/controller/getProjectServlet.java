@@ -29,7 +29,10 @@ public class getProjectServlet extends HttpServlet {
         String role=(String)session.getAttribute("role");
         String title = req.getParameter("projectTitle");
         String author = req.getParameter("projectManager");
-        int flag = Integer.parseInt(req.getParameter("projectFlag"));
+        String flagStr = req.getParameter("projectFlag");
+        int flag=0;
+        if(flagStr != null && !flagStr.trim().isEmpty())
+        flag = Integer.parseInt(req.getParameter("projectFlag"));
         if(Objects.equals(role, "user")|| ( Objects.equals(role,"admin")&&(flag!=1) ) ){
             if(Objects.equals(title, "admin")){
                 messageModel =service.getProjectByAuthor(author);

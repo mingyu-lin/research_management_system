@@ -7,11 +7,19 @@ public class Project {
     private String projectEndTime;
     private String projectManager;
     private String projectSource;
-    private String projectFunding;
-    private String projectLevel;
-
+    private Integer projectFunding;
+    private Integer projectLevel;
+    private Integer projectFlag;
     public String getProjectTitle() {
         return projectTitle;
+    }
+
+    public Integer getProjectFlag() {
+        return projectFlag;
+    }
+
+    public void setProjectFlag(Integer projectFlag) {
+        this.projectFlag = projectFlag;
     }
 
     public void setProjectTitle(String projectTitle) {
@@ -58,19 +66,19 @@ public class Project {
         this.projectManager = projectManager;
     }
 
-    public String getProjectFunding() {
+    public Integer getProjectFunding() {
         return projectFunding;
     }
 
-    public void setProjectFunding(String projectFunding) {
+    public void setProjectFunding(Integer projectFunding) {
         this.projectFunding = projectFunding;
     }
 
-    public String getProjectLevel() {
+    public Integer getProjectLevel() {
         return projectLevel;
     }
 
-    public void setProjectLevel(String projectLevel) {
+    public void setProjectLevel(Integer projectLevel) {
         this.projectLevel = projectLevel;
     }
 }

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -74,6 +75,7 @@
     $(document).ready(function() {
         const sessionRole = '<%= session.getAttribute("role") %>';
         const sessionUsername = '<%= session.getAttribute("username") %>';
+        var user;
         var userId = new URLSearchParams(window.location.search).get('author'); // 获取URL中的userId
         if (userId) {
             $.ajax({
@@ -81,7 +83,7 @@
                 method: 'GET',
                 success: function(response) {
                     if (response.code === 1 && response.object) {
-                        var user = response.object;
+                       user = response.object;
                         $('#profile-name').val(user.userName);
                         $('#profile-email').val(user.userEmail);
                         $('#profile-phone').val(user.userPhone);
@@ -92,6 +94,8 @@
                         $('.user-profile').html('<p>' + response.msg + '</p>');
                     }
                     // Check role and username conditions
+                    console.log("sessionUsername:"+sessionUsername);
+                    console.log(user.userName);
                     const isCurrentUser = sessionUsername === user.userName;
                     if (sessionRole === 'admin') {
                         $('#save-button, #message-button').show();

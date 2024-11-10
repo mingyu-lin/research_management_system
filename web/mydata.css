@@ -1,0 +1,129 @@
+/* 通用样式 */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+}
+
+/* 布局容器 */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    width: 200px;
+    background-color: rgba(92, 126, 250, 1);
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.sidebar .logo img {
+    height: 116px;
+    width: 200px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #0056b3;
+    padding-left: 25px;
+}
+
+/* 内容容器 */
+.content-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* 页眉样式 */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: white;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 主内容区 */
+.main-area {
+    flex-grow: 1;
+    padding: 40px;
+    background-color: #ffffff;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* 图表容器 */
+/* 卡片样式 */
+.card {
+    background-color: white;
+    padding: 30px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 图表容器 */
+.chart-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.chart-container h3 {
+    font-size: 1.6em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.chart-container p {
+    font-size: 1em;
+    color: #666;
+    margin-top: 8px;
+}
+
+/* 提示板块 */
+.summary {
+    background-color: #f7f9fc;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    color: #444;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.chart-container {
+    margin: 30px 0;
+}
+
+.chart-container h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.chart-container p {
+    font-size: 1em;
+    color: #666;
+    margin-top: 10px;
+}

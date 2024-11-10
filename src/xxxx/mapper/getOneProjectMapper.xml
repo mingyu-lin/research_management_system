@@ -5,7 +5,7 @@
 <mapper namespace="xxxx.mapper.getOneProjectMapper"><!--命名空间-->
 
     <select id="getOneProject" parameterType="int" resultType="xxxx.entity.Project">
-        select * from project where project.id=#{id}
+        select * from project where project.projectid=#{id}
     </select>
 
 </mapper>

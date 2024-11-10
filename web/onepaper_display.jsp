@@ -46,8 +46,10 @@
                 <a href="index.jsp" class="back-home">返回首页</a>
             </div>
             <div class="user-info">
-                <span class="username">用户名</span>(<span class="role">身份</span>)
-                <a href="#" class="logout">退出登录</a>
+                <span class="username"><c:out value="${sessionScope.username}" /></span>
+                (<span class="role"><c:out value="${sessionScope.role}" /></span>) <!-- 修改为显示用户名和身份 -->
+
+                <a href="logout.jsp" onclick="window.history.forward(); window.location.href='login.jsp'; return false;" class="logout">退出登录</a>
             </div>
         </div>
 
@@ -88,7 +90,7 @@
                     $paperDetails.append('<h2>' + paper.paperTitle + '</h2>');
                     $paperDetails.append('<p><strong>作者：</strong>' + paper.paperAuthor + '</p>');
                     $paperDetails.append('<p><strong>刊物/会议：</strong>' + paper.paperPublicationVenue + '</p>');
-                    $paperDetails.append('<p><strong>等级：</strong>' + paper.paperAbstract + '</p>');
+                    $paperDetails.append('<p><strong>等级：</strong>' + paper.paperLevel + '</p>');
                     $paperDetails.append('<p><strong>关键词：</strong>' + paper.keywords + '</p>');
                     $paperDetails.append('<p><strong>摘要：</strong>' + paper.paperAbstract + '</p>');
                     $paperDetails.append('<p><strong>发布时间：</strong>' + paper.paperPublicationTime + '</p>');

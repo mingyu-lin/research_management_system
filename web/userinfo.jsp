@@ -45,8 +45,10 @@
                 <a href="index.jsp" class="back-home">返回首页</a>
             </div>
             <div class="user-info">
-                <span class="username">用户名</span>(<span class="role">身份</span>)
-                <a href="#" class="logout">退出登录</a>
+                <span class="username"><c:out value="${sessionScope.username}" /></span>
+                (<span class="role"><c:out value="${sessionScope.role}" /></span>) <!-- 修改为显示用户名和身份 -->
+                <button id="changePwdBtn" class="change-password">修改密码</button>
+                <a href="logout.jsp" onclick="window.history.forward(); window.location.href='login.jsp'; return false;" class="logout">退出登录</a>
             </div>
         </div>
 
@@ -85,10 +87,67 @@
         </div>
     </div>
 </div>
-
+<div id="changePwdModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>修改密码</h2>
+        <form id="changePwdForm">
+            <label for="oldPassword">旧密码:</label>
+            <input type="password" id="oldPassword" name="oldPassword" required>
+            <label for="newPassword">新密码:</label>
+            <input type="password" id="newPassword" name="newPassword" required>
+            <label for="confirmNewPassword">确认新密码:</label>
+            <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+            <div class="buttons-container">
+                <button type="submit" class="confirm-btn">确认</button>
+                <button type="button" class="cancel-btn">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#changePwdBtn').click(function() {
+            $('#changePwdModal').css('display', 'block');
+        });
+
+        // Close modal
+        $('.close, .cancel-btn').click(function() {
+            $('#changePwdModal').css('display', 'none');
+        });
+
+        // Handle form submission
+        $('#changePwdForm').submit(function(event) {
+            event.preventDefault();
+
+            const oldPassword = $('#oldPassword').val();
+            const newPassword = $('#newPassword').val();
+            const confirmNewPassword = $('#confirmNewPassword').val();
+
+            if (newPassword !== confirmNewPassword) {
+                alert('新密码和确认密码不匹配，请重新输入。');
+                return;
+            }
+
+            // Send AJAX request to server
+            $.ajax({
+                url: '/editPwd',
+                method: 'POST',
+                data: {
+                    oldPassword: oldPassword,
+                    newPassword: newPassword
+                },
+                success: function(response) {
+                    alert(response.msg || '操作成功');
+                    $('#changePwdModal').css('display', 'none');
+                },
+                error: function(xhr, status, error) {
+                    alert('修改密码时出现错误，请重试。');
+                }
+            });
+        });
+
         const sessionRole = '<%= session.getAttribute("role") %>';
         const sessionUsername = '<%= session.getAttribute("username") %>';
         var user;

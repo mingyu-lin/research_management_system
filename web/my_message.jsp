@@ -26,7 +26,7 @@
       <c:when test="${sessionScope.role == 'admin'}">
         <a href="add_news.jsp">发布新闻</a>
         <a href="my_paper.jsp?paperFlag=1">论文审核</a>
-        <a href="#">项目审核</a>
+        <a href="my_project.jsp?projectFlag=1">项目审核</a>
         <a href="user_management.jsp">用户管理</a>
       </c:when>
 
@@ -34,10 +34,10 @@
       <c:when test="${sessionScope.role == 'user'}">
         <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
         <a href="#" id="myPapersLink">我的论文</a>
-        <a href="#">我的项目</a>
+        <a href="#" id="myProjectLink">我的项目</a>
         <a href="add_paper.jsp?paperAuthor=${sessionScope.username}">提交论文</a>
-        <a href="#">提交项目</a>
-        <a href="#">我的数据</a>
+        <a href="add_project.jsp?projectManager=${sessionScope.username}">提交项目</a>
+        <a href="mydata.jsp">我的数据</a>
       </c:when>
     </c:choose>
   </div>
@@ -47,8 +47,10 @@
         <a href="#" class="back-home">返回首页</a>
       </div>
       <div class="user-info">
-        <span class="username">用户名</span>(<span class="role">身份</span>)
-        <a href="#" class="logout">退出登录</a>
+        <span class="username"><c:out value="${sessionScope.username}" /></span>
+        (<span class="role"><c:out value="${sessionScope.role}" /></span>) <!-- 修改为显示用户名和身份 -->
+
+        <a href="logout.jsp" onclick="window.history.forward(); window.location.href='login.jsp'; return false;" class="logout">退出登录</a>
       </div>
     </div>
 
@@ -108,6 +110,41 @@
       var receiverName = $(this).data('receiver-name'); // 获取接收者姓名
       // 跳转并填充接收者姓名和ID
       window.location.href = 'sendmessage.jsp?receiverName=' + encodeURIComponent(receiverName) + '&receiverId=' + receiverId;
+    });
+    $('#myPapersLink').click(function(event) {
+      event.preventDefault(); // 阻止默认行为
+
+      // 从 session 中获取当前用户姓名
+      var username = '<%= session.getAttribute("username") %>';
+      var paperTitle = 'admin';
+
+      // 构建 URL
+      console.log("username:" + username);
+      var url = 'my_paper.jsp?paperAuthor=' + encodeURIComponent(username) + '&paperTitle=' + encodeURIComponent(paperTitle);
+
+      // 跳转到目标页面
+      window.location.href = url;
+    });
+    $('#myProjectLink').click(function(event) {
+      event.preventDefault(); // 阻止默认行为
+
+      // 从 session 中获取当前用户姓名
+      var username = '<%= session.getAttribute("username") %>';
+      var paperTitle = 'admin';
+
+      // 构建 URL
+      console.log("username:" + username);
+      var url = 'my_project.jsp?projectManager=' + encodeURIComponent(username) + '&projectTitle=' + encodeURIComponent(paperTitle);
+
+      // 跳转到目标页面
+      window.location.href = url;
+    });
+    // Handle view news button click
+    $(document).on('click', '.view-news', function() {
+      var newsId = $(this).data('news-id'); // 获取新闻 ID
+
+      // 直接跳转到展示页面
+      window.location.href = 'onenews_display.jsp?newsId=' + newsId;
     });
   });
 </script>

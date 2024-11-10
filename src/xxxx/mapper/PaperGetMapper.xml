@@ -13,13 +13,11 @@
     </select>
 
     <select id="getPaperByTitleAndAuthor_flagPos" resultType="xxxx.entity.Paper">
-        select * from paper where paper.paperAuthor LIKE  #{author} and paper.paperTitle LIKE #{title} and paper.paperFlag>0
+        select * from paper where paper.paperAuthor LIKE CONCAT('%', #{author}, '%') and paper.paperTitle LIKE CONCAT('%', #{title}, '%') and paper.paperFlag>0
     </select>
 
     <select id="getPaper_flagNeg1" resultType="xxxx.entity.Paper">
         select * from paper where paper.paperFlag=-1
     </select>
-    <insert id="paperInsert" parameterType="String" useGeneratedKeys="true" keyProperty="paperId">
-        insert into paper(paperTitle,paperAuthor,paperPublicationVenue,paperPublicationTime,paperAbstract,Keywords,paperFlag,paperLevel) values (#{paperTitle},#{paperAuthor},#{paperPublicationVenue},#{paperPublicationTime},#{paperAbstract},#{keywords},-1,#{paperLevel})
-    </insert>
+
 </mapper>

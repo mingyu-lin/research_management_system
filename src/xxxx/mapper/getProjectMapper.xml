@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xxxx.mapper.getProjectMapper"><!--获取所有新闻-->
+
+    <select id="getProjectByAuthor" parameterType="String" resultType="xxxx.entity.Project">
+        select * from project where project.projectManager=#{author}
+    </select>
+
+    <select id="getProjectByTitleAndAuthor_flagPos" resultType="xxxx.entity.Project">
+        select * from project where project.projectManager LIKE CONCAT('%', #{author}, '%') and project.projectTitle LIKE CONCAT('%', #{title}, '%') and project.projectFlag>0
+    </select>
+
+    <select id="getProject_flagNeg1" resultType="xxxx.entity.Project">
+        select * from project where project.projectFlag=-1
+    </select>
+
+</mapper>

@@ -4,8 +4,8 @@
 
 <mapper namespace="xxxx.mapper.getMessageMapper"><!--命名空间-->
 
-    <select id="getMessage" parameterType="int" resultType="xxxx.entity.Message">
-        select * from message where message.receiverId=#{id}
+    <select id="getMessage" parameterType="String" resultType="xxxx.entity.Message">
+        select * from message where message.receiverName=#{name}
     </select>
 
 </mapper>

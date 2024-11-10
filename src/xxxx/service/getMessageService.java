@@ -13,12 +13,12 @@ import java.util.List;
 
 public class getMessageService {
 
-    public MessageModel getMessage(int id) {
+    public MessageModel getMessage(String name) {
         MessageModel messageModel = new MessageModel();
         SqlSession session= GetSqlSession.createSqlSession();
 
         getMessageMapper mapper = session.getMapper(getMessageMapper.class);//
-        List<Message> info=mapper.getMessage(id);//调用mapper层获取新闻
+        List<Message> info=mapper.getMessage(name);//调用mapper层获取新闻
 
         messageModel.setCount(info.size());
         if(info==null){

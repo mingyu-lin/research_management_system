@@ -22,10 +22,10 @@ public class GetMessageServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         MessageModel messageModel=new MessageModel();
-        HttpSession session = req.getSession();
-
+        HttpSession session= req.getSession();
+        String role=(String)session.getAttribute("role");
         //
-        int parameter = (int) session.getAttribute("userid");
+        String parameter = req.getParameter("receiverName");
         messageModel = service.getMessage(parameter);
         //
 

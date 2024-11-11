@@ -5,7 +5,7 @@
 <mapper namespace="xxxx.mapper.deleteUserMapper"><!--命名空间-->
 
     <select id="deleteUser" parameterType="int">
-        delete * from userinfo where userinfo.userId=#{id}
+        delete from userinfo where userinfo.userId=#{id}
     </select>
 
 </mapper>

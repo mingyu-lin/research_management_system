@@ -21,23 +21,23 @@
         <div class="inputBox">
             <div class="inputText">
                 <span class="iconfont icon-nickname">U</span>
-                <input type="text" id="userName" name="userName" placeholder="用户名" required />
+                <input type="text" id="userName" name="userName" placeholder="用户名" maxlength="20" required />
             </div>
             <div class="inputText">
                 <span class="iconfont icon-visible">P</span>
-                <input type="password" id="userPwd" name="userPwd" placeholder="密码" required />
+                <input type="password" id="userPwd" name="userPwd" placeholder="密码" maxlength="20" required />
             </div>
             <div class="inputText">
                 <span class="iconfont icon-mail">M</span>
-                <input type="email" id="userEmail" name="userEmail" placeholder="邮箱" required />
+                <input type="email" id="userEmail" name="userEmail" placeholder="邮箱" maxlength="30" required />
             </div>
             <div class="inputText">
                 <span class="iconfont icon-phone">T</span>
-                <input type="text" id="userPhone" name="userPhone" placeholder="电话号码" required />
+                <input type="number" id="userPhone" name="userPhone" placeholder="电话号码" maxlength="20" required />
             </div>
             <div class="inputText">
                 <span class="iconfont icon-phone">T</span>
-                <input type="text" id="userPostscript" name="userPostscript" placeholder="备注" />
+                <input type="text" id="userPostscript" name="userPostscript" placeholder="备注" maxlength=""/>
             </div>
             <!-- 可以根据需要添加更多的输入字段，如确认密码、昵称等 -->
         </div>

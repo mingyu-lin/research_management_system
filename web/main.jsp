@@ -50,7 +50,7 @@
         <span class="username"><c:out value="${sessionScope.username}" /></span>
         (<span class="role"><c:out value="${sessionScope.role}" /></span>) <!-- 修改为显示用户名和身份 -->
         <button id="changePwdBtn" class="change-password">修改密码</button>
-        <a href="logout.jsp" onclick="window.history.forward(); window.location.href='login.jsp'; return false;" class="logout">退出登录</a>
+        <a href="logout.jsp"  class="logout">退出登录</a>
       </div>
 
     </div>

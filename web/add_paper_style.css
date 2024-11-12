@@ -89,8 +89,11 @@ label {
     color: #333;
 }
 
-input[type="text"], input[type="date"], textarea {
-    width: 90%; /* 输入框和文本区域宽度100% */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea {
+    width: 90%; /* 输入框和文本区域宽度90% */
     padding: 10px; /* 内边距 */
     border: 1px solid #ccc; /* 边框颜色 */
     border-radius: 4px; /* 圆角 */
@@ -98,6 +101,7 @@ input[type="text"], input[type="date"], textarea {
     font-size: 1em; /* 字体大小 */
     color: #333;
 }
+
 
 textarea {
     resize: vertical; /* 允许调整文本框高度 */

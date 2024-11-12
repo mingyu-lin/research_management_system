@@ -1,7 +1,12 @@
 package xxxx.controller;
 
 import com.google.gson.Gson;
+import xxxx.entity.Message;
+import xxxx.entity.Paper;
 import xxxx.entity.value.MessageModel;
+import xxxx.service.SendMessageService;
+import xxxx.service.UserService;
+import xxxx.service.getOnePaperService;
 import xxxx.service.paperReviewService;
 
 import javax.servlet.ServletException;
@@ -21,6 +26,7 @@ public class PaperReviewServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         MessageModel messageModel = new MessageModel();
+        String adminname = req.getSession().getAttribute("username").toString();
         // 获取参数
         String spaperId = req.getParameter("paperId");
         String action = req.getParameter("action");
@@ -54,6 +60,17 @@ public class PaperReviewServlet extends HttpServlet {
             out.flush();
             return;
         }
+        Message msg = new Message();
+        Paper paper = new Paper();
+        getOnePaperService getonePaperService=new getOnePaperService();
+        UserService userService=new UserService();
+        paper=(Paper)getonePaperService.getOnePaper(paperId).getObject();
+        String receivername=paper.getPaperAuthor();
+        msg.setReceiverName(receivername);
+        msg.setReceiverId(userService.Finduser(receivername).getUserId());
+        msg.setSenderId(adminId);
+        msg.setSenderName(adminname);
+
         try {
             if ("approve".equals(action)) {
                 // 处理通过逻辑
@@ -67,6 +84,9 @@ public class PaperReviewServlet extends HttpServlet {
                 if(paperReview.paperReviewApprove(adminId,paperId)) {
                     messageModel.setCode(1);
                     messageModel.setMsg("论文审核通过成功");
+                    msg.setContent("您的论文："+paper.getPaperTitle()+" 审核通过");
+                    SendMessageService sendMessageService=new SendMessageService();
+                    sendMessageService.sendMessage(msg);
                 }
                 else{
                     messageModel.setCode(0);
@@ -82,6 +102,9 @@ public class PaperReviewServlet extends HttpServlet {
                 if(paperReview.paperReviewDecline(adminId,paperId)) {
                 messageModel.setCode(1);
                 messageModel.setMsg("论文审核拒绝成功");
+                    msg.setContent("您的论文："+paper.getPaperTitle()+" 审核未通过");
+                    SendMessageService sendMessageService=new SendMessageService();
+                    sendMessageService.sendMessage(msg);
                 }
                 else{
                     messageModel.setCode(0);

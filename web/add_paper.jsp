@@ -56,22 +56,22 @@
             <h2>添加论文</h2>
             <form id="paperForm" action="/add_paper" method="POST">
                 <label for="paperTitle">标题:</label>
-                <input type="text" id="paperTitle" name="paperTitle" required>
+                <input type="text" id="paperTitle" name="paperTitle" maxlength="50" required>
 
                 <label for="paperAuthor">作者:</label>
-                <input type="text" id="paperAuthor" name="paperAuthor" readonly required>
+                <input type="text" id="paperAuthor" name="paperAuthor" maxlength="20" readonly required>
 
                 <label for="paperPublicationVenue">发表地点:</label>
-                <input type="text" id="paperPublicationVenue" name="paperPublicationVenue">
+                <input type="text" id="paperPublicationVenue" name="paperPublicationVenue" maxlength="50">
 
                 <label for="Keywords">关键词:</label>
-                <input type="text" id="Keywords" name="Keywords">
+                <input type="text" id="Keywords" name="Keywords" maxlength="255">
 
                 <label for="paperAbstract">摘要:</label>
-                <textarea id="paperAbstract" name="paperAbstract" rows="4"></textarea>
+                <textarea type="text" id="paperAbstract" name="paperAbstract" rows="4" maxlength="500"></textarea>
 
                 <label for="paperLevel">等级:</label>
-                <input type="text" id="paperLevel" name="paperLevel" required>
+                <input type="number" id="paperLevel" name="paperLevel"  required>
 
                 <label for="paperPublicationTime">发表时间:</label>
                 <input type="date" id="paperPublicationTime" name="paperPublicationTime">
@@ -132,7 +132,7 @@
             var paperAbstract = $('#paperAbstract').val();
             var paperPublicationTime = $('#paperPublicationTime').val();
             var paperLevel = $('#paperLevel').val(); // 新增的等级输入框
-
+            console.log("action: "+action)
             $.ajax({
                 url: '/addPaper', // 发送消息的后端接口
                 method: 'POST',

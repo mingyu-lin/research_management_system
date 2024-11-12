@@ -114,6 +114,7 @@
     $(document).on('click', '.delete-user', function() {
       var userId = $(this).data('user-id');
       if (confirm("确定删除该用户吗？")) {
+        console.log("userId"+userId);
         $.ajax({
           url: '/deleteUser',
           method: 'POST',

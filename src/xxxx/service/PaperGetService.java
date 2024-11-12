@@ -123,7 +123,10 @@ public class PaperGetService {
         SqlSession session= GetSqlSession.createSqlSession();
         PaperGetMapper paperGetMapper = session.getMapper(PaperGetMapper.class);
         int res= paperGetMapper.paperUpdate(paper);
+        System.out.println("res:"+res);
+        System.out.println("paperTitle:"+ paper.getPaperTitle());
         session.commit();
+        session.close();
         if(res>0){
             messageModel.setCode(1);
             messageModel.setMsg("success");

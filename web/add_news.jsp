@@ -57,7 +57,7 @@
         <form id="addNewsForm">
           <div>
             <label for="newsTitle">标题：</label>
-            <input type="text" id="newsTitle" name="newsTitle" required>
+            <input type="text" id="newsTitle" name="newsTitle" maxlength="100" required>
           </div>
           <div>
             <label for="newsContent">内容：</label>
@@ -65,7 +65,7 @@
           </div>
           <div>
             <label for="newsWriter">作者：</label>
-            <input type="text" id="newsWriter" name="newsWriter" readonly>
+            <input type="text" id="newsWriter" name="newsWriter" maxlength="20" readonly>
           </div>
           <div class="submit-container">
             <button type="submit">提交</button>

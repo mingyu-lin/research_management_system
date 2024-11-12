@@ -59,13 +59,15 @@
           <label for="searchType" class="search-label"></label>
           <select id="searchType" name="searchType" class="search-select">
             <option value="项目">项目</option>
+            <option value="论文">论文</option>
+
           </select>
 
           <label for="searchTitle" class="search-label"></label>
           <input type="text" id="searchTitle" name="searchTitle" class="search-input" placeholder="请输入标题关键字" />
 
           <label for="searchManager" class="search-label"></label>
-          <input type="text" id="searchManager" name="searchManager" class="search-input" placeholder="请输入项目经理关键字" />
+          <input type="text" id="searchManager" name="searchManager" class="search-input" placeholder="请输入作者/经理关键字" />
 
           <button type="submit" class="search-button">搜索</button>
         </form>
@@ -164,12 +166,14 @@
 
     $('.search-button').click(function(event) {
       event.preventDefault();
-
+      var type=$('#searchType').val();
       var searchTitle = $('#searchTitle').val();
       var searchManager = $('#searchManager').val();
 
       var url = 'my_project.jsp?projectTitle=' + encodeURIComponent(searchTitle) + '&projectManager=' + encodeURIComponent(searchManager);
-
+      if(type==="论文"){
+        url='my_paper.jsp?paperTitle=' + encodeURIComponent(searchTitle) + '&paperAuthor=' + encodeURIComponent(searchManager);
+      }
       window.location.href = url;
     });
     $('#myPapersLink').click(function(event) {

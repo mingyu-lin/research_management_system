@@ -20,11 +20,11 @@
     <div class="inputBox">
       <div class="inputText">
         <span class="iconfont icon-nickname">U</span>
-        <input type="text" placeholder="Username" name="username" id="username">
+        <input type="text" placeholder="Username" name="username" id="username" maxlength="20">
       </div>
       <div class="inputText">
         <span class="iconfont icon-visible">P</span>
-        <input type="password" placeholder="Password" name="userpwd" id="userpwd">
+        <input type="password" placeholder="Password" name="userpwd" id="userpwd" maxlength="20">
       </div>
       <div class="inputText role">
         <span class="iconfont icon-role">R</span>

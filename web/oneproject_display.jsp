@@ -143,10 +143,13 @@
           success: function(response) {
             if (response.code === 1) {
               alert("项目删除成功！");
-              history.back();
-              setTimeout(function() {
-                location.reload(true);
-              }, 0);
+              var username = '<%= session.getAttribute("username") %>';
+              var paperTitle = 'admin';
+
+              // 构建 URL
+              console.log("username:" + username);
+              var url = 'my_project.jsp?projectManager=' + encodeURIComponent(username) + '&projectTitle=' + encodeURIComponent(paperTitle);
+              window.location.href = url;
             } else {
               alert("删除失败: " + response.msg);
             }
@@ -166,10 +169,8 @@
         success: function(response) {
           if (response.code === 1) {
             alert("项目审核通过成功！");
-            history.back();
-            setTimeout(function() {
-              location.reload(true);
-            }, 0);
+           var url='my_project.jsp?projectFlag=1';
+            window.location.href = url;
           } else {
             alert("审核失败: " + response.msg);
           }
@@ -188,10 +189,8 @@
         success: function(response) {
           if (response.code === 1) {
             alert("项目审核拒绝成功！");
-            history.back();
-            setTimeout(function() {
-              location.reload(true);
-            }, 0);
+            var url='my_project.jsp?projectFlag=1';
+            window.location.href = url;
           } else {
             alert("拒绝失败: " + response.msg);
           }

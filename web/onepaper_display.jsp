@@ -97,8 +97,8 @@
 
                     // 控制按钮的显示
                     if (role === 'admin') {
-                        $('#edit-button').show();
-                        $('#delete-button').show();
+                        $('#edit-button').hide();
+                        $('#delete-button').hide();
                         $('#approve-button').show();
                         $('#reject-button').show();
                     } else if (paper.paperAuthor === username) {
@@ -143,10 +143,15 @@
                     success: function(response) {
                         if (response.code === 1) {
                             alert("论文删除成功！");
-                           history.back(); // 删除后跳转到首页
-                            setTimeout(function() {
-                                location.reload(true); // 强制刷新页面
-                            }, 0);
+                            var username = '<%= session.getAttribute("username") %>';
+                            var paperTitle = 'admin';
+
+                            // 构建 URL
+                            console.log("username:" + username);
+                            var url = 'my_paper.jsp?paperAuthor=' + encodeURIComponent(username) + '&paperTitle=' + encodeURIComponent(paperTitle);
+
+                            // 跳转到目标页面
+                            window.location.href = url;
                         } else {
                             alert("删除失败: " + response.msg);
                         }
@@ -166,10 +171,8 @@
                 success: function(response) {
                     if (response.code === 1) {
                         alert("论文审核通过成功！");
-                        history.back(); // 删除后跳转到首页
-                        setTimeout(function() {
-                            location.reload(true); // 强制刷新页面
-                        }, 0);
+                        var url='my_paper.jsp?paperFlag=1';
+                        window.location.href = url;
                     } else {
                         alert("审核失败: " + response.msg);
                     }
@@ -188,10 +191,9 @@
                 success: function(response) {
                     if (response.code === 1) {
                         alert("论文审核拒绝成功！");
-                        history.back(); // 删除后跳转到首页
-                        setTimeout(function() {
-                            location.reload(true); // 强制刷新页面
-                        }, 0);
+                        var url='my_paper.jsp?paperFlag=1';
+                        window.location.href = url;
+
                     } else {
                         alert("拒绝失败: " + response.msg);
                     }

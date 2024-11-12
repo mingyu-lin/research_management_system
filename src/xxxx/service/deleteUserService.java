@@ -13,7 +13,8 @@ public class deleteUserService {
 
         deleteUserMapper mapper = session.getMapper(deleteUserMapper.class);//
         mapper.deleteUser(id);//调用mapper层获取新闻
-
+        session.commit();
+        session.close();
     }
 
 }

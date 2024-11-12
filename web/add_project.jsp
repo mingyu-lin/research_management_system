@@ -56,25 +56,25 @@
       <h2>添加项目</h2>
       <form id="projectForm" action="/add_project" method="POST">
         <label for="projectTitle">项目标题:</label>
-        <input type="text" id="projectTitle" name="projectTitle" required>
+        <input type="text" id="projectTitle" name="projectTitle" maxlength="100" required>
 
         <label for="projectManager">项目负责人:</label>
-        <input type="text" id="projectManager" name="projectManager" readonly required>
+        <input type="text" id="projectManager" name="projectManager" maxlength="20" readonly required>
 
         <label for="projectSource">项目来源:</label>
-        <input type="text" id="projectSource" name="projectSource">
+        <input type="text" id="projectSource" name="projectSource" maxlength="255" required>
 
         <label for="projectFunding">项目资金:</label>
-        <input type="text" id="projectFunding" name="projectFunding">
+        <input type="number" id="projectFunding" name="projectFunding" required>
 
         <label for="projectLevel">项目等级:</label>
-        <input type="text" id="projectLevel" name="projectLevel" required>
+        <input type="number" id="projectLevel" name="projectLevel" required>
 
         <label for="projectBeginTime">项目开始时间:</label>
-        <input type="date" id="projectBeginTime" name="projectBeginTime">
+        <input type="date" id="projectBeginTime" name="projectBeginTime" required>
 
         <label for="projectEndTime">项目结束时间:</label>
-        <input type="date" id="projectEndTime" name="projectEndTime">
+        <input type="date" id="projectEndTime" name="projectEndTime" required>
 
         <div class="button-container">
           <button type="submit" id="addBtn">提交</button>

@@ -57,23 +57,23 @@
                 <h2 class="profile-name">个人信息</h2>
                 <div class="profile-field">
                     <label for="profile-name">姓名：</label>
-                    <input type="text" id="profile-name" class="profile-name" readonly>
+                    <input type="text" id="profile-name" class="profile-name" maxlength="20" readonly>
                 </div>
                 <div class="profile-field">
                     <label for="profile-email">邮箱：</label>
-                    <input type="email" id="profile-email" class="profile-email" readonly>
+                    <input type="email" id="profile-email" class="profile-email" maxlength="30" readonly>
                 </div>
                 <div class="profile-field">
                     <label for="profile-phone">电话：</label>
-                    <input type="tel" id="profile-phone" class="profile-phone" readonly>
+                    <input type="tel" id="profile-phone" class="profile-phone" maxlength="20" readonly>
                 </div>
                 <div class="profile-field">
                     <label for="profile-postscript">备注：</label>
-                    <input type="text" id="profile-postscript" class="profile-postscript" readonly>
+                    <input type="text" id="profile-postscript" class="profile-postscript" maxlength="100" readonly>
                 </div>
                 <div class="profile-field">
                     <label for="profile-create-time">注册时间：</label>
-                    <input type="text" id="profile-create-time" class="profile-create-time" readonly>
+                    <input type="text" id="profile-create-time" class="profile-create-time"  readonly>
                 </div>
 
                 <!-- 新增保存和返回按钮 -->
@@ -151,6 +151,7 @@
         const sessionRole = '<%= session.getAttribute("role") %>';
         const sessionUsername = '<%= session.getAttribute("username") %>';
         var user;
+        var userid;
         var userId = new URLSearchParams(window.location.search).get('author'); // 获取URL中的userId
         if (userId) {
             $.ajax({
@@ -159,6 +160,7 @@
                 success: function(response) {
                     if (response.code === 1 && response.object) {
                        user = response.object;
+                       userid=user.userId;
                         $('#profile-name').val(user.userName);
                         $('#profile-email').val(user.userEmail);
                         $('#profile-phone').val(user.userPhone);
@@ -188,7 +190,7 @@
             });
             $('#save-button').on('click', function() {
                 var userData = {
-                    userId: userId,
+                    userId: userid,
                     userName: $('#profile-name').val(),
                     userEmail: $('#profile-email').val(),
                     userPhone: $('#profile-phone').val(),
@@ -216,7 +218,7 @@
             });
             $('#message-button').on('click', function() {
                 var receiver = $('#profile-name').val(); // 获取当前显示的用户名
-                window.location.href = 'sendmessage.jsp?receiver=' + encodeURIComponent(receiver);
+                window.location.href = 'sendmessage.jsp?receiverName=' + encodeURIComponent(receiver);
             });
         }
         $('#myPapersLink').click(function(event) {

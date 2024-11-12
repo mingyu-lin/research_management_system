@@ -1,5 +1,4 @@
 package xxxx.controller;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,9 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
-
 import com.google.gson.Gson;
 import xxxx.entity.value.MessageModel;
 import xxxx.service.UserService;
@@ -19,20 +15,17 @@ import xxxx.service.UserService;
 public class EditPwdServlet extends HttpServlet {
 
     private UserService userService = new UserService();
-
-
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
         HttpSession session = request.getSession();
-        int userId = (int) session.getAttribute("userid"); // Assuming user ID is in session
+        int userId = (int) session.getAttribute("userid") ;// Assuming user ID is in session
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
         String userName = request.getParameter("userName");
         String userEmail = request.getParameter("userEmail");
         String userPhone = request.getParameter("userPhone");
         String userPostscript = request.getParameter("userPostscript");
-
         MessageModel messageModel = new MessageModel();
 
         try {

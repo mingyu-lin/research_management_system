@@ -1,8 +1,11 @@
 package xxxx.controller;
 
 import com.google.gson.Gson;
+import xxxx.entity.Message;
+import xxxx.entity.Paper;
+import xxxx.entity.Project;
 import xxxx.entity.value.MessageModel;
-import xxxx.service.ProjectReviewService;
+import xxxx.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +24,7 @@ public class ProjectReviewServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         MessageModel messageModel = new MessageModel();
-
+        String adminname = req.getSession().getAttribute("username").toString();
         String sprojectId = req.getParameter("projectId");
         String action = req.getParameter("action");
         String sadminId = req.getParameter("adminId");
@@ -50,12 +53,25 @@ public class ProjectReviewServlet extends HttpServlet {
             out.flush();
             return;
         }
+        Message msg = new Message();
+        Project project=new Project();
+        getOneProjectService getoneProjectService=new getOneProjectService();
+        UserService userService=new UserService();
 
+        project=(Project)getoneProjectService.getOneProject(projectId).getObject();
+        String receivername=project.getProjectManager();
+        msg.setReceiverName(receivername);
+        msg.setReceiverId(userService.Finduser(receivername).getUserId());
+        msg.setSenderId(adminId);
+        msg.setSenderName(adminname);
         try {
             if ("approve".equals(action)) {
                 if (projectReview.projectReviewApprove(adminId, projectId)) {
                     messageModel.setCode(1);
                     messageModel.setMsg("项目审核通过成功");
+                    msg.setContent("您的项目："+project.getProjectTitle()+" 审核通过");
+                    SendMessageService sendMessageService=new SendMessageService();
+                    sendMessageService.sendMessage(msg);
                 } else {
                     messageModel.setCode(0);
                     messageModel.setMsg("出错了");
@@ -64,6 +80,9 @@ public class ProjectReviewServlet extends HttpServlet {
                 if (projectReview.projectReviewDecline(adminId, projectId)) {
                     messageModel.setCode(1);
                     messageModel.setMsg("项目审核拒绝成功");
+                    msg.setContent("您的项目："+project.getProjectTitle()+" 审核未通过");
+                    SendMessageService sendMessageService=new SendMessageService();
+                    sendMessageService.sendMessage(msg);
                 } else {
                     messageModel.setCode(0);
                     messageModel.setMsg("出错了");

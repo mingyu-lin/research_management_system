@@ -89,7 +89,16 @@ html, body {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
+.manager-link {
+    color: #007bff; /* 链接颜色 */
+    text-decoration: none; /* 去掉下划线 */
+    font-weight: bold; /* 加粗字体 */
+    transition: color 0.3s; /* 添加过渡效果 */
+}
+.manager-link:hover {
+    color: #0056b3; /* 鼠标悬停时的颜色 */
+    text-decoration: underline; /* 悬停时显示下划线 */
+}
 .projects-table th,
 .projects-table td {
     border: 1px solid #ddd;

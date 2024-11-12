@@ -90,13 +90,16 @@ label {
     color: #333;
 }
 
-input[type="text"], input[type="date"], textarea {
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    font-size: 1em;
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea {
+    width: 90%; /* 输入框和文本区域宽度90% */
+    padding: 10px; /* 内边距 */
+    border: 1px solid #ccc; /* 边框颜色 */
+    border-radius: 4px; /* 圆角 */
+    margin-bottom: 15px; /* 下间距 */
+    font-size: 1em; /* 字体大小 */
     color: #333;
 }
 

@@ -15,8 +15,8 @@
             projectManager = #{projectManager},
             projectSource = #{projectSource},
             projectFunding = #{projectFunding},
-            projectFlag = #{projectFlag},
+            projectFlag = -1,
             projectLevel = #{projectLevel}
-        WHERE projectId = #{projectId}
+        WHERE projectTitle = #{projectTitle}
     </update>
 </mapper>

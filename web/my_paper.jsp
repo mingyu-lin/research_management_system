@@ -174,10 +174,12 @@
       // 获取输入框的值
       var searchTitle = $('#searchTitle').val();
       var searchAuthor = $('#searchAuthor').val();
-
+      var type=$('#searchType').val();
       // 构造跳转URL，附带查询参数
       var url = 'my_paper.jsp?paperTitle=' + encodeURIComponent(searchTitle) + '&paperAuthor=' + encodeURIComponent(searchAuthor);
-
+      if(type==="项目"){
+        url='my_project.jsp?projectTitle=' + encodeURIComponent(searchTitle) + '&projectManager=' + encodeURIComponent(searchAuthor);
+      }
       // 跳转到my_paper.jsp，并附上参数
       window.location.href = url;
     });

@@ -29,14 +29,14 @@ public class addPaperServlet extends HttpServlet {
         InsertPaper.setPaperTitle(req.getParameter("paperTitle"));
         InsertPaper.setPaperAuthor(req.getParameter("paperAuthor"));
         InsertPaper.setPaperPublicationVenue(req.getParameter("paperPublicationVenue"));
-        InsertPaper.setKeywords(req.getParameter("Keywords"));
+        InsertPaper.setKeywords(req.getParameter("keywords"));
         InsertPaper.setPaperAbstract(req.getParameter("paperAbstract"));
         InsertPaper.setPaperPublicationTime(req.getParameter("paperPublicationTime"));
         InsertPaper.setPaperLevel(req.getParameter("paperLevel"));
         String action = req.getParameter("action");
         System.out.println("Received papertitle: " + InsertPaper.getPaperTitle());
         System.out.println("Received paperauthor: " + InsertPaper.getPaperAuthor());
-
+        System.out.println("action: "+action);
         try{
             MessageModel messageModel=new MessageModel();
             if(action.equals("add")) {

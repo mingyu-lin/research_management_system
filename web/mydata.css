@@ -1,21 +1,26 @@
-/* 通用样式 */
-body, html {
+/* mydata.css */
+
+html, body {
     height: 100%;
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background-color: #f0f2f5;
 }
 
-/* 布局容器 */
 .container {
     display: flex;
     min-height: 100vh;
 }
 
-/* 侧边栏样式 */
+.system-name {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .sidebar {
     width: 200px;
-    background-color: rgba(92, 126, 250, 1);
+    background-color: rgba(92, 126, 250);
     color: white;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
@@ -42,88 +47,115 @@ body, html {
     padding-left: 25px;
 }
 
-/* 内容容器 */
 .content-container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
 }
 
-/* 页眉样式 */
+
 .header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 15px 20px;
-    background-color: white;
-    color: #333;
-    border-bottom: 2px solid #e0e0e0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
 }
-
-/* 主内容区 */
-.main-area {
+.breadcrumb {
     flex-grow: 1;
-    padding: 40px;
-    background-color: #ffffff;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    text-align: center;
 }
 
-/* 图表容器 */
-/* 卡片样式 */
-.card {
-    background-color: white;
-    padding: 30px;
-    margin: 20px 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.back-home {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-/* 图表容器 */
-.chart-container {
-    margin: 20px 0;
-    text-align: center;
+.back-home:hover {
+    background-color: rgba(0, 123, 255, 0.1);
 }
 
-.chart-container h3 {
-    font-size: 1.6em;
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.user-info .username,
+.user-info .role {
+    margin-left: 10px;
     color: #333;
-    margin-bottom: 15px;
 }
 
-.chart-container p {
-    font-size: 1em;
-    color: #666;
-    margin-top: 8px;
+.logout {
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: #dc3545;
+    transition: background-color 0.3s;
 }
 
-/* 提示板块 */
-.summary {
-    background-color: #f7f9fc;
-    padding: 20px;
+.logout:hover {
+    background-color: #c82333;
+    color: white;
+}
+
+.main-area {
+    background: #fff;
     border-radius: 8px;
-    margin-top: 20px;
-    text-align: center;
-    font-size: 1.2em;
-    color: #444;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.main-area h2 {
+    color: #2e3a46;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
 .chart-container {
-    margin: 30px 0;
+
+    width: 45%; /* 调整为小于50%，确保两张图表能在同一行 */
+    margin: 10px;
+    display: inline-block;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.chart-group {
+    display: flex;
+    flex-wrap: wrap; /* 确保图表容器在宽度不足时自动换行 */
+    justify-content: space-around; /* 在行内均匀分布图表 */
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        width: 100%; /* 小屏幕下每个图表占满整行 */
+    }
 }
 
 .chart-container h3 {
-    font-size: 1.5em;
-    color: #333;
+    font-size: 1.1em;
     margin-bottom: 10px;
+    color: #333;
+}
+
+.chart-container canvas {
+    max-width: 100%;
+    height: auto;
 }
 
 .chart-container p {
-    font-size: 1em;
-    color: #666;
+    font-size: 0.9em;
+    color: #555;
     margin-top: 10px;
 }

@@ -34,8 +34,8 @@
             paperPublicationTime = #{paperPublicationTime},
             paperAbstract = #{paperAbstract},
             Keywords = #{keywords},
-            paperFlag = #{paperFlag},
+            paperFlag = -1,
             paperLevel = #{paperLevel}
-        WHERE paperId = #{paperId}
+        WHERE paperTitle = #{paperTitle}
     </update>
 </mapper>

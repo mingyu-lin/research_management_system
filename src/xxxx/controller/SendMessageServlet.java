@@ -49,7 +49,7 @@ public class SendMessageServlet extends HttpServlet {
             else {
                 message.setSenderId(SendUser.getUserId());
                 message.setReceiverId(receiverUser.getUserId());
-                sendMessageService.sendMessage(message);
+               messageModel= sendMessageService.sendMessage(message);
             }
             resp.setContentType("application/json;charset=UTF-8");
             PrintWriter out = resp.getWriter();

@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -8,9 +7,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>添加论文</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> <!-- 引入显示百分比的插件 -->
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="mydata.css"> <!-- 引入CSS文件 -->
+  <link rel="stylesheet" type="text/css" href="mydata.css">
+  <style>
+    .chart-container {
+      width: 45%;
+      margin: 2%;
+      display: inline-block;
+      vertical-align: top;
+    }
+    .chart-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
@@ -30,8 +43,6 @@
         <a href="my_project.jsp?projectFlag=1">项目审核</a>
         <a href="user_management.jsp">用户管理</a>
       </c:when>
-
-
       <c:when test="${sessionScope.role == 'user'}">
         <a href="userinfo.jsp?author=${sessionScope.username}">个人信息</a>
         <a href="#" id="myPapersLink">我的论文</a>
@@ -58,68 +69,121 @@
     <div class="main-area">
       <h2>数据可视化</h2>
 
-      <div class="chart-container">
-        <h3>全部论文分布情况</h3>
-        <canvas id="allPapersChart"></canvas>
-        <p>描述全部论文的等级分布情况。</p>
+      <!-- 论文等级分布 -->
+      <div class="chart-group">
+        <div class="chart-container">
+          <h3>用户论文等级分布</h3>
+          <canvas id="userPapersPieChart"></canvas>
+          <p id="userPapersComment"></p>
+        </div>
+        <div class="chart-container">
+          <h3>全体论文等级分布</h3>
+          <canvas id="allPapersPieChart"></canvas>
+          <p id="allPapersComment"></p>
+        </div>
       </div>
 
-      <div class="chart-container">
-        <h3>当前用户论文分布情况</h3>
-        <canvas id="userPapersChart"></canvas>
-        <p>描述当前用户论文的等级分布情况。</p>
+      <!-- 项目等级分布 -->
+      <div class="chart-group">
+        <div class="chart-container">
+          <h3>用户项目等级分布</h3>
+          <canvas id="userProjectsPieChart"></canvas>
+          <p id="userProjectsComment"></p>
+        </div>
+        <div class="chart-container">
+          <h3>全体项目等级分布</h3>
+          <canvas id="allProjectsPieChart"></canvas>
+          <p id="allProjectsComment"></p>
+        </div>
       </div>
 
+      <!-- 论文发表时间分布 -->
       <div class="chart-container">
-        <h3>全部项目分布情况</h3>
-        <canvas id="allProjectsChart"></canvas>
-        <p>描述全部项目的等级分布情况。</p>
+        <h3>论文发表时间分布</h3>
+        <canvas id="papersTimeBarChart"></canvas>
+        <p id="papersTimeComment"></p>
       </div>
 
+      <!-- 项目资金分布 -->
       <div class="chart-container">
-        <h3>当前用户项目分布情况</h3>
-        <canvas id="userProjectsChart"></canvas>
-        <p>描述当前用户项目的等级分布情况。</p>
+        <h3>项目资金分布</h3>
+        <canvas id="projectsFundsBarChart"></canvas>
+        <p id="projectsFundsComment"></p>
       </div>
     </div>
-
-
   </div>
 </div>
 
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-
-
 <script type="text/javascript">
-
   document.addEventListener("DOMContentLoaded", function() {
     // 测试数据
-    const allPapersData = { counts: [5, 10, 15, 20, 25], avgRatings: [1.2, 2.3, 3.1, 4.0, 4.8] };
-    const userPapersData = { counts: [3, 5, 8, 6, 10], avgRatings: [1.0, 2.5, 3.0, 4.2, 4.5] };
-    const allProjectsData = { counts: [6, 12, 18, 15, 10], avgRatings: [1.5, 2.6, 3.3, 4.1, 4.9] };
-    const userProjectsData = { counts: [2, 7, 6, 5, 8], avgRatings: [1.3, 2.4, 3.2, 4.0, 4.4] };
+    const userPapersPieData = {
+      labels: ['等级 1', '等级 2', '等级 3', '等级 4', '等级 5'],
+      datasets: [{
+        data: [3, 5, 8, 6, 10],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+      }]
+    };
+    const allPapersPieData = {
+      labels: ['等级 1', '等级 2', '等级 3', '等级 4', '等级 5'],
+      datasets: [{
+        data: [5, 10, 15, 20, 25],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+      }]
+    };
+    const userProjectsPieData = {
+      labels: ['等级 1', '等级 2', '等级 3', '等级 4', '等级 5'],
+      datasets: [{
+        data: [2, 7, 6, 5, 8],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+      }]
+    };
+    const allProjectsPieData = {
+      labels: ['等级 1', '等级 2', '等级 3', '等级 4', '等级 5'],
+      datasets: [{
+        data: [6, 12, 18, 15, 10],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+      }]
+    };
+    const papersTimeBarData = {
+      labels: ['2020', '2021', '2022', '2023'],
+      datasets: [{
+        label: '论文数量',
+        data: [10, 15, 20, 25],
+        backgroundColor: 'rgba(92, 126, 250, 0.7)'
+      }]
+    };
+    const projectsFundsBarData = {
+      labels: ['<10万', '10-50万', '50-100万', '>100万'],
+      datasets: [{
+        label: '项目数量',
+        data: [5, 10, 15, 5],
+        backgroundColor: 'rgba(54, 162, 235, 0.7)'
+      }]
+    };
 
     // 初始化图表
-    function createChart(ctx, data, label, backgroundColor, avgRatings) {
+    function createPieChart(ctx, data) {
       new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['等级 1', '等级 2', '等级 3', '等级 4', '等级 5'],
-          datasets: [{
-            label: label,
-            data: data.counts,
-            backgroundColor: backgroundColor
-          }]
-        },
+        type: 'pie',
+        data: data,
         options: {
-          scales: { y: { beginAtZero: true } },
           plugins: {
+            datalabels: {
+              formatter: (value, context) => {
+                let sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                let percentage = (value / sum * 100).toFixed(1) + '%';
+                return percentage;
+              },
+              color: '#fff',
+              font: {
+                weight: 'bold'
+              }
+            },
             tooltip: {
               callbacks: {
-                label: function(context) {
-                  const avgRating = avgRatings[context.dataIndex];
-                  return `数量: ${context.raw}, 平均等级: ${avgRating}`;
-                }
+                label: (context) => `等级 ${context.label}: ${context.raw}`
               }
             }
           }
@@ -127,49 +191,59 @@
       });
     }
 
-    createChart(document.getElementById('allPapersChart').getContext('2d'), allPapersData, '所有论文', 'rgba(92, 126, 250, 0.7)', allPapersData.avgRatings);
-    createChart(document.getElementById('userPapersChart').getContext('2d'), userPapersData, '用户论文', 'rgba(255, 99, 132, 0.7)', userPapersData.avgRatings);
-    createChart(document.getElementById('allProjectsChart').getContext('2d'), allProjectsData, '所有项目', 'rgba(54, 162, 235, 0.7)', allProjectsData.avgRatings);
-    createChart(document.getElementById('userProjectsChart').getContext('2d'), userProjectsData, '用户项目', 'rgba(255, 206, 86, 0.7)', userProjectsData.avgRatings);
+    function createBarChart(ctx, data) {
+      new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
 
-    // 总体评价
-    const summaryDiv = document.createElement("div");
-    summaryDiv.classList.add("summary");
-    summaryDiv.innerHTML = `
-        <p>您的论文表现高于平均水平，项目表现接近平均水平。</p>
-        <p>建议您在后续工作中继续提升！</p>
-    `;
-    document.querySelector(".content-container").appendChild(summaryDiv);
-    $('#myPapersLink').click(function(event) {
-      event.preventDefault(); // 阻止默认行为
+    createPieChart(document.getElementById('userPapersPieChart').getContext('2d'), userPapersPieData);
+    createPieChart(document.getElementById('allPapersPieChart').getContext('2d'), allPapersPieData);
+    createPieChart(document.getElementById('userProjectsPieChart').getContext('2d'), userProjectsPieData);
+    createPieChart(document.getElementById('allProjectsPieChart').getContext('2d'), allProjectsPieData);
+    createBarChart(document.getElementById('papersTimeBarChart').getContext('2d'), papersTimeBarData);
+    createBarChart(document.getElementById('projectsFundsBarChart').getContext('2d'), projectsFundsBarData);
 
-      // 从 session 中获取当前用户姓名
-      var username = '<%= session.getAttribute("username") %>';
-      var paperTitle = 'admin';
-
-      // 构建 URL
-      console.log("username:" + username);
-      var url = 'my_paper.jsp?paperAuthor=' + encodeURIComponent(username) + '&paperTitle=' + encodeURIComponent(paperTitle);
-
-      // 跳转到目标页面
-      window.location.href = url;
-    });
-    $('#myProjectLink').click(function(event) {
-      event.preventDefault(); // 阻止默认行为
-
-      // 从 session 中获取当前用户姓名
-      var username = '<%= session.getAttribute("username") %>';
-      var paperTitle = 'admin';
-
-      // 构建 URL
-      console.log("username:" + username);
-      var url = 'my_project.jsp?projectManager=' + encodeURIComponent(username) + '&projectTitle=' + encodeURIComponent(paperTitle);
-
-      // 跳转到目标页面
-      window.location.href = url;
-    });
+    // 设置评价内容
+    document.getElementById('userPapersComment').innerText = "用户论文等级与整体论文数据对比显示：用户主要集中在中间等级，低等级较少。";
+    document.getElementById('allPapersComment').innerText = "整体论文等级分布显示：论文数量随着等级提高而逐步减少，说明高等级论文较为稀少。";
+    document.getElementById('userProjectsComment').innerText = "用户项目分布较为均衡，高等级项目数量相对较少。";
+    document.getElementById('allProjectsComment').innerText = "整体项目数据分布相似，显示高等级项目数量有限。";
+    document.getElementById('papersTimeComment').innerText = "论文发表时间分布显示：2020年至2023年间，发表数量逐年增加，研究趋势稳步提升。";
+    document.getElementById('projectsFundsComment').innerText = "项目资金分布显示：50-100万预算的项目最多，资金投入较为集中。";
   });
+  $('#myPapersLink').click(function(event) {
+    event.preventDefault(); // 阻止默认行为
 
+    // 从 session 中获取当前用户姓名
+    var username = '<%= session.getAttribute("username") %>';
+    var paperTitle = 'admin';
+
+    // 构建 URL
+    console.log("username:" + username);
+    var url = 'my_paper.jsp?paperAuthor=' + encodeURIComponent(username) + '&paperTitle=' + encodeURIComponent(paperTitle);
+
+    // 跳转到目标页面
+    window.location.href = url;
+  });
+  $('#myProjectLink').click(function(event) {
+    event.preventDefault(); // 阻止默认行为
+
+    // 从 session 中获取当前用户姓名
+    var username = '<%= session.getAttribute("username") %>';
+    var paperTitle = 'admin';
+
+    // 构建 URL
+    console.log("username:" + username);
+    var url = 'my_project.jsp?projectManager=' + encodeURIComponent(username) + '&projectTitle=' + encodeURIComponent(paperTitle);
+
+    // 跳转到目标页面
+    window.location.href = url;
+  });
 </script>
 </body>
 </html>
